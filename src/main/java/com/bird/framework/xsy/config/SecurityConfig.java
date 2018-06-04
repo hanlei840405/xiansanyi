@@ -58,7 +58,7 @@ public class SecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/css/**", "/", "/login").permitAll()
+                    .antMatchers("/css/login.css", "/login").permitAll()
                     .and()
                     .formLogin()
                     .loginPage("/login").failureUrl("/")
