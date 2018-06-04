@@ -1,21 +1,20 @@
-package com.bird.framework.xsy.vo;
+package com.bird.framework.xsy.entity;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * @author jesse.Han
+ * @author 
  */
 @Data
-public class UserVo implements Serializable {
-
-    private static final long serialVersionUID = -1599812044787127727L;
+public class User implements Serializable {
+    private static final long serialVersionUID = 5992432388215325478L;
     private Long id;
 
-    private String code;
-
     private String username;
+
+    private String password;
 
     private String nick;
 
@@ -27,5 +26,5 @@ public class UserVo implements Serializable {
 
     private String status;
 
-    private Long version;
+    private Integer version;
 }

@@ -1,15 +1,15 @@
-package entity;
+package com.bird.framework.xsy.entity;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * @author jesse.Han
+ * @author 
  */
 @Data
 public class Group implements Serializable {
-    private static final long serialVersionUID = -7558445848038809366L;
+    private static final long serialVersionUID = 6888950878100449167L;
     private Long id;
 
     private String code;
@@ -18,5 +18,6 @@ public class Group implements Serializable {
 
     private String status;
 
-    private Long version;
+    private Integer version;
+
 }
