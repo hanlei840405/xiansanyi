@@ -23,3 +23,9 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+mall-service/target/
+operate-console/target/
+operate-service/target/classes/com/bird/framework/xsy/operate/service/RoleService$1.class
+operate-service/target/classes/com/bird/framework/xsy/operate/service/RoleService.class
+operate-service/target/
+mall-rest/target/

@@ -1,0 +1,24 @@
+spring:
+  dataSource:
+    url: jdbc:mysql://116.196.104.38:3306/xsy?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&useSSL=false
+    username: ruguiniao
+    password: 1qaz@WSX?
+    driverClassName: com.mysql.jdbc.Driver
+  redis:
+    host: 116.196.104.38
+    port: 6379
+mybatis:
+  mapperLocations: classpath:mappers/*.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+jwt:
+  header: Authorization
+  expiration: 300 # 5 minutes
+  secret: bird
+  tokenHead: "Bearer "
+
+
