@@ -16,7 +16,7 @@ public class Menu implements Serializable {
 
     private String name;
 
-    private String leaf;
+    private String category;
 
     private Long parentId;
 

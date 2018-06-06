@@ -4,9 +4,10 @@
 var destroyUI = {};
 $(function () {
     $('#menu').tree({
-        url: 'menus',
+        url: 'rest/system/menu/tree',
         method: 'GET',
         onClick: function (node) {
+            debugger;
             if (node.attributes && node.attributes.url && node.attributes.url != null && node.attributes.url != '') {
                 if ($('#center').tabs('exists', node.id)) {
                     $('#center').tabs('select', node.id);
