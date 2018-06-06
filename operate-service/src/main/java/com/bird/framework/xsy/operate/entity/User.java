@@ -1,11 +1,12 @@
 package com.bird.framework.xsy.operate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * @author 
+ * @author
  */
 @Data
 public class User implements Serializable {
@@ -14,6 +15,7 @@ public class User implements Serializable {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String nick;

@@ -1,7 +1,9 @@
 package com.bird.framework.xsy.mall.service.auth;
 
+import com.bird.framework.xsy.mall.entity.Role;
 import com.bird.framework.xsy.mall.entity.User;
-import com.bird.framework.xsy.mall.jwt.JwtTokenUtil;
+import com.bird.framework.xsy.mall.jwt.JwtTokenHelper;
+import com.bird.framework.xsy.mall.jwt.JwtUserFactory;
 import com.bird.framework.xsy.mall.service.RoleService;
 import com.bird.framework.xsy.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
 public class AuthService {
 
@@ -22,7 +26,7 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenHelper jwtTokenHelper;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -44,7 +48,7 @@ public class AuthService {
 
         // Reload password post-security so we can generate token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        final String token = jwtTokenHelper.generateToken(userDetails);
         return token;
     }
 
@@ -57,8 +61,8 @@ public class AuthService {
         final String rawPassword = user.getPassword();
         user.setPassword(encoder.encode(rawPassword));
         userService.save(user);
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        final UserDetails userDetails = JwtUserFactory.create(user, null, roleService.selectByUsername(username).stream().map(Role::getCode).collect(Collectors.toList()));
+        final String token = jwtTokenHelper.generateToken(userDetails);
         return token;
     }
 }

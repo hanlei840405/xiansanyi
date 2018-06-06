@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>omdm</title>
+    <title>闲散易</title>
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="ui/theme/easyui.css">
     <link rel="stylesheet" type="text/css" href="ui/icon.css">
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',border:true" style="height:70px;padding:5px">
-    <p style="margin: 40px, 20px 1px 0px; float: right;"><a href="javascript: void(0)" onclick="setLanguage('zh_CN')">中文</a> <a href="javascript: void(0)" onclick="setLanguage('en')">English</a> $nick <a href="http://test.ssa.jd.com/sso/logout">logout</a>
+    <p style="margin: 40px, 20px 1px 0px; float: right;"><span th:text="${user.firstName + user.lastName}"></span> <a href="http://test.ssa.jd.com/sso/logout">logout</a>
     </p>
 </div>
-<div data-options="region:'west',split:true,title:'MENU',border:true" style="width:200px;padding:10px 0px 10px 0px">
+<div data-options="region:'west',split:true,title:'功能菜单',border:true" style="width:200px;padding:10px 0px 10px 0px">
     <ul id="menu"></ul>
 </div>
 <div data-options="region:'south',border:true" style="height:50px;padding:5px;"></div>

@@ -1,19 +1,18 @@
 package com.bird.framework.xsy.operate;
 
-import com.bird.framework.xsy.operate.config.ServiceConfig;
-import com.bird.framework.xsy.operate.service.UserService;
+import com.bird.framework.xsy.operate.service.RoleService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @SpringBootApplication
-@Import(ServiceConfig.class)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 300)
 public class OperateApplication {
 
     public static void main(String[] args) {
-        UserService userService = SpringApplication.run(OperateApplication.class, args).getBean(UserService.class);
+        RoleService roleService = SpringApplication.run(OperateApplication.class, args).getBean(RoleService.class);
 //		User user = new User();
 //		user.setFirstName("磊");
 //		user.setLastName("韩");
@@ -24,5 +23,11 @@ public class OperateApplication {
 //		user.setStatus("1");
 //		user.setVersion(1);
 //		userService.save(user);
+//        Role role = new Role();
+//        role.setCode("ROLE_BIZ");
+//        role.setName("运营");
+//        role.setStatus("1");
+//        role.setVersion(1);
+//        roleService.save(role);
     }
 }

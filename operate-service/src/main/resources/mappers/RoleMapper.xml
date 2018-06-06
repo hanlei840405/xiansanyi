@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bird.framework.xsy.mapper.RoleMapper">
-    <resultMap id="BaseResultMap" type="com.bird.framework.xsy.entity.Role">
+<mapper namespace="com.bird.framework.xsy.operate.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.bird.framework.xsy.operate.entity.Role">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -21,13 +21,13 @@
     delete from operate_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.bird.framework.xsy.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.bird.framework.xsy.operate.entity.Role" useGeneratedKeys="true" keyProperty="id">
     insert into operate_role (id, code, name, 
       status, version)
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
   </insert>
-    <insert id="insertSelective" parameterType="com.bird.framework.xsy.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.bird.framework.xsy.operate.entity.Role" useGeneratedKeys="true" keyProperty="id">
         insert into operate_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -64,7 +64,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.entity.Role">
+    <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.operate.entity.Role">
         update operate_role
         <set>
             <if test="code != null">
@@ -82,7 +82,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.entity.Role">
+    <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.operate.entity.Role">
     update operate_role
     set code = #{code,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -92,7 +92,7 @@
   </update>
     <select id="selectByUsername" parameterType="string" resultMap="BaseResultMap">
     select
-    u.*
+    r.*
     from operate_role r
     inner join operate_user_role ru on r.id=ru.role_id
     inner join operate_user u on u.id=ru.user_id

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtTokenHelper implements Serializable {
 
     private static final long serialVersionUID = -3301605591108950415L;
 

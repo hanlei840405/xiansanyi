@@ -47,8 +47,6 @@ public class RoleService {
             roleMapper.updateByPrimaryKeySelective(role);
         } else {
             // insert
-            String code = sequenceService.generate("operate-role", "%08d");
-            role.setCode(code);
             roleMapper.insert(role);
         }
     }

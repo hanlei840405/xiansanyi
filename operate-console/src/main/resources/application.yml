@@ -11,7 +11,7 @@ spring:
     store-type: redis
   thymeleaf:
     cache: false
-    mode: LEGACYHTML5
+    mode: HTML
 mybatis:
   mapperLocations: classpath:mappers/*.xml
 

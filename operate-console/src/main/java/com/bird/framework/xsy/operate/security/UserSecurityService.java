@@ -1,4 +1,4 @@
-package com.bird.framework.xsy.operate.config;
+package com.bird.framework.xsy.operate.security;
 
 import com.bird.framework.xsy.operate.entity.Role;
 import com.bird.framework.xsy.operate.entity.User;

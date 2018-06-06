@@ -21,4 +21,7 @@ jwt:
   secret: bird
   tokenHead: "Bearer "
 
+server:
+  port: 80
+
 

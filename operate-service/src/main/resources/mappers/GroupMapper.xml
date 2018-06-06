@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bird.framework.xsy.mapper.GroupMapper">
-  <resultMap id="BaseResultMap" type="com.bird.framework.xsy.entity.Group">
+<mapper namespace="com.bird.framework.xsy.operate.mapper.GroupMapper">
+  <resultMap id="BaseResultMap" type="com.bird.framework.xsy.operate.entity.Group">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -21,13 +21,13 @@
     delete from operate_group
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.bird.framework.xsy.entity.Group" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.bird.framework.xsy.operate.entity.Group" useGeneratedKeys="true" keyProperty="id">
     insert into operate_group (id, code, name, 
       status, version)
     values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.bird.framework.xsy.entity.Group" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.bird.framework.xsy.operate.entity.Group" useGeneratedKeys="true" keyProperty="id">
     insert into operate_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.entity.Group">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.operate.entity.Group">
     update operate_group
     <set>
       <if test="code != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.entity.Group">
+  <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.operate.entity.Group">
     update operate_group
     set code = #{code,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
