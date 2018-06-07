@@ -25,17 +25,17 @@ public class MenuService {
         return menuMapper.tree(id, roles);
     }
 
-    public Page<Menu> findAll(Integer pageNo, Integer pageSize) {
+    public Page<Menu> findAll(Long id, Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        Page<Menu> menus = (Page<Menu>) menuMapper.findAll();
+        Page<Menu> menus = (Page<Menu>) menuMapper.findAll(id);
         return menus;
     }
 
     public void save(Menu menu) {
         if (menu.getId() != null) {
             menuMapper.updateByPrimaryKeySelective(menu);
-        }else {
-            String code = sequenceService.generate("operate_menu","%08d");
+        } else {
+            String code = sequenceService.generate("operate_menu", "%08d");
             menu.setCode(code);
             menuMapper.insert(menu);
         }

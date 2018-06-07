@@ -12,8 +12,8 @@
         <result column="version" jdbcType="INTEGER" property="version"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, code, name, category, parent_id, url, status, version
-  </sql>
+        id, code, name, category, parent_id, url, status, version
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -21,18 +21,18 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from operate_menu
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from operate_menu
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
     <insert id="insert" parameterType="com.bird.framework.xsy.operate.entity.Menu" useGeneratedKeys="true"
             keyProperty="id">
-    insert into operate_menu (id, code, name,
-      category, parent_id, url, status,
-      version)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-      #{category,jdbcType=CHAR}, #{parentId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
-      #{version,jdbcType=INTEGER})
-  </insert>
+        insert into operate_menu (id, code, name,
+        category, parent_id, url, status,
+        version)
+        values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{category,jdbcType=CHAR}, #{parentId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+        #{version,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="com.bird.framework.xsy.operate.entity.Menu" useGeneratedKeys="true"
             keyProperty="id">
         insert into operate_menu
@@ -117,16 +117,16 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.operate.entity.Menu">
-    update operate_menu
-    set code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      category = #{category,jdbcType=CHAR},
-      parent_id = #{parentId,jdbcType=BIGINT},
-      url = #{url,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      version = #{version,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        update operate_menu
+        set code = #{code,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        category = #{category,jdbcType=CHAR},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        url = #{url,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
     <select id="tree" resultMap="BaseResultMap">
         select
         t1.*
@@ -139,9 +139,10 @@
             #{item}
         </foreach>
     </select>
-    <select id="findAll" resultMap="BaseResultMap">
+    <select id="findAll" resultMap="BaseResultMap" parameterType="long">
         select
         <include refid="Base_Column_List"/>
         from operate_menu
+        where parent_id=#{parentId}
     </select>
 </mapper>

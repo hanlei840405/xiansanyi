@@ -22,5 +22,5 @@ public interface MenuMapper {
 
     List<Menu> tree(@Param("parentId") Long parentId, @Param("roles") List<String> roles);
 
-    List<Menu> findAll();
+    List<Menu> findAll(Long parentId);
 }

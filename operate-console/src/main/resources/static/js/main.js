@@ -3,16 +3,15 @@
  */
 var destroyUI = {};
 $(function () {
-    $('#menu').tree({
+    $('#portal_menu').tree({
         url: 'rest/system/menu/tree',
         method: 'GET',
         onClick: function (node) {
-            debugger;
             if (node.attributes && node.attributes.url && node.attributes.url != null && node.attributes.url != '') {
-                if ($('#center').tabs('exists', node.id)) {
-                    $('#center').tabs('select', node.id);
+                if ($('#portal_center').tabs('exists', node.id)) {
+                    $('#portal_center').tabs('select', node.id);
                 } else {
-                    $('#center').tabs('add', {
+                    $('#portal_center').tabs('add', {
                         id: node.id,
                         title: node.text,
                         href: node.attributes.url,
@@ -26,11 +25,11 @@ $(function () {
         }
     });
 
-    $('#center').tabs({
+    $('#portal_center').tabs({
         border: false,
         onBeforeClose: function () {
             debugger;
-            var containId = $('#center').tabs('getSelected')[0].id;
+            var containId = $('#portal_center').tabs('getSelected')[0].id;
             for (var i = 0;i < destroyUI[containId].length; i++) {
                 var componentId = destroyUI[containId][i];
                 $('#' + componentId).panel('destroy');

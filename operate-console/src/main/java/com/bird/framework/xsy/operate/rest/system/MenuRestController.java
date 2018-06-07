@@ -7,9 +7,11 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +26,8 @@ public class MenuRestController {
     private MenuService menuService;
 
     @RequestMapping("/page")
-    public Map<String, Object> page(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "20") Integer rows) {
-        Page<Menu> menus = menuService.findAll(page, rows);
+    public Map<String, Object> page(@RequestParam(defaultValue = "0") Long id, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "20") Integer rows) {
+        Page<Menu> menus = menuService.findAll(id, page, rows);
         Map<String, Object> result = Maps.newHashMap();
         result.put("total", menus.getTotal());
         result.put("rows", menus.getResult());
@@ -44,5 +46,11 @@ public class MenuRestController {
             trees.add(new Tree<>(menu.getId(), menu.getName(), null, attributes));
         });
         return trees;
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public int save(Menu menu) {
+        menuService.save(menu);
+        return HttpStatus.OK.value();
     }
 }
