@@ -10,15 +10,20 @@
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="version" jdbcType="INTEGER" property="version"/>
+        <association property="menu" javaType="com.bird.framework.xsy.operate.entity.Menu">
+            <id column="parent_id" property="id" jdbcType="BIGINT"/>
+            <result column="parent_code" property="code" jdbcType="VARCHAR"/>
+            <result column="parent_name" property="name" jdbcType="VARCHAR"/>
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
         id, code, name, category, parent_id, url, status, version
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from operate_menu
-        where id = #{id,jdbcType=BIGINT}
+        t1.*, t2.code as parent_code, t2.name as parent_name
+        from operate_menu t1 left join operate_menu t2 on t1.parent_id = t2.id
+        where t1.id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from operate_menu

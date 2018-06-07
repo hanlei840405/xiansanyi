@@ -25,6 +25,11 @@ public class MenuRestController {
     @Autowired
     private MenuService menuService;
 
+    @RequestMapping("/id")
+    public Menu id(Long id) {
+        return menuService.selectById(id);
+    }
+
     @RequestMapping("/page")
     public Map<String, Object> page(@RequestParam(defaultValue = "0") Long id, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "20") Integer rows) {
         Page<Menu> menus = menuService.findAll(id, page, rows);

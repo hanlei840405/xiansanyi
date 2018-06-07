@@ -25,4 +25,6 @@ public class Menu implements Serializable {
     private String status;
 
     private Integer version;
+
+    private Menu menu;
 }
