@@ -58,4 +58,10 @@ public class MenuRestController {
         menuService.save(menu);
         return HttpStatus.OK.value();
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public int delete(Long id) {
+        menuService.delete(id);
+        return HttpStatus.OK.value();
+    }
 }

@@ -35,7 +35,34 @@ $(function () {
             text: '删除',
             iconCls: 'icon-remove',
             handler: function () {
-                alert('save')
+                var selected = $('#system_menu_index_dataGrid').datagrid('getSelected');
+                if (selected) {
+                    $.messager.confirm('确认','是否删除该条数据',function(r){
+                        if (r){
+                            $.messager.progress();
+                            $.ajax({
+                                url: 'rest/system/menu/delete',
+                                data: {id: selected.id},
+                                type: 'POST',
+                                beforeSend: function (xhr) {
+                                    var token = $("meta[name='_csrf']").attr("content");
+                                    var header = $("meta[name='_csrf_header']").attr("content");
+                                    xhr.setRequestHeader(header, token);
+                                },
+                                success: function (res) {
+                                    if (res == 200) {
+                                        $('#system_menu_index_edit_dialog').dialog('close');
+                                        $('#system_menu_index_dataGrid').datagrid('reload');
+                                        $('#system_menu_index_menu_tree').tree('reload');
+                                        $.messager.progress('close');
+                                    }
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    $.messager.alert('警告', '请选择一条记录进行编辑');
+                }
             }
         }],
         columns: [[

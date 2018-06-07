@@ -39,6 +39,9 @@ public class MenuService {
             menu.setCode(code);
             menuMapper.insert(menu);
         }
+    }
 
+    public void delete(Long id) {
+        menuMapper.deleteByPrimaryKey(id);
     }
 }
