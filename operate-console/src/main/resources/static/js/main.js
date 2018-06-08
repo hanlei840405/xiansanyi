@@ -4,8 +4,9 @@
 var destroyUI = {};
 $(function () {
     $('#portal_menu').tree({
-        url: 'rest/system/menu/tree',
+        url: 'rest/system/menu/privileges',
         method: 'GET',
+        animate: true,
         onClick: function (node) {
             if (node.attributes && node.attributes.url && node.attributes.url != null && node.attributes.url != '') {
                 if ($('#portal_center').tabs('exists', node.id)) {

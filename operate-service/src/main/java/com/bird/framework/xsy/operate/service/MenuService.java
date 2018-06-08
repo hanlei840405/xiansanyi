@@ -21,11 +21,19 @@ public class MenuService {
         return menuMapper.selectByPrimaryKey(id);
     }
 
-    public List<Menu> tree(Long id, List<String> roles) {
-        return menuMapper.tree(id, roles);
+    public List<Menu> tree(Long id) {
+        return menuMapper.tree(id);
     }
 
-    public Page<Menu> findAll(Long id, Integer pageNo, Integer pageSize) {
+    public List<Menu> allByRole(String code) {
+        return menuMapper.allByRole(code);
+    }
+
+    public List<Menu> privileges(Long id, List<String> roles) {
+        return menuMapper.privileges(id, roles);
+    }
+
+    public Page<Menu> page(Long id, Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         Page<Menu> menus = (Page<Menu>) menuMapper.findAll(id);
         return menus;

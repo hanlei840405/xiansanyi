@@ -2,6 +2,7 @@ $(function () {
     $('#system_menu_index_menu_tree').tree({
         url: 'rest/system/menu/tree',
         method: 'GET',
+        animate: true,
         onClick: function (node) {
             $('#system_menu_index_dataGrid').datagrid('load', {id: node.id});
         }
@@ -67,14 +68,14 @@ $(function () {
         }],
         columns: [[
             {field: 'ck', checkbox: true},
-            {field: 'code', title: '编号', width: 100, align: 'right'},
-            {field: 'name', title: '名称', width: 100, align: 'right'},
-            {field: 'category', title: '类别', width: 100, align: 'right'},
+            {field: 'code', title: '编号', width: 200, align: 'right'},
+            {field: 'name', title: '名称', width: 200, align: 'right'},
+            {field: 'category', title: '类别', width: 200, align: 'right'},
             {field: 'url', title: '链接', width: 400, align: 'right'},
             {
                 field: 'status',
                 title: '状态',
-                width: 100,
+                width: 150,
                 align: 'right',
                 formatter: function (value) {
                     if (value == '1') {
@@ -104,10 +105,11 @@ $(function () {
             }
         }],
         onOpen: function () {
-            $('#system_menu_index_edit_dialog_form').form('reset');
             var selected = $('#system_menu_index_dataGrid').datagrid('getSelected');
             if (selected) { // 修改
                 $('#system_menu_index_edit_dialog_form').form('load', 'rest/system/menu/id?id=' + selected.id);
+            }else { // 新增
+                $('#system_menu_index_edit_dialog_form').form('reset');
             }
         }
     });
@@ -184,6 +186,7 @@ $(function () {
         textField: 'name',
         panelHeight: 'auto',
         editable: false,
+        animate: true,
         url: 'rest/system/menu/tree',
         method: 'get'
     });

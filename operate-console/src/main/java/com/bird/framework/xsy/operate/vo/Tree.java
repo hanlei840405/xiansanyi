@@ -3,7 +3,9 @@ package com.bird.framework.xsy.operate.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -18,6 +20,10 @@ public class Tree<ID extends Serializable> implements Serializable {
     private boolean checked;
 
     private String state = "closed";
+
+    private ID parentId;
+
+    private List<Tree<ID>> children = new ArrayList<>();
 
     private Map<String, Object> attributes = new HashMap<>();
 

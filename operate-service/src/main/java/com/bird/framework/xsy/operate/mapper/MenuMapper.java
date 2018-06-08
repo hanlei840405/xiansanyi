@@ -20,7 +20,11 @@ public interface MenuMapper {
 
     int updateByPrimaryKey(Menu record);
 
-    List<Menu> tree(@Param("parentId") Long parentId, @Param("roles") List<String> roles);
+    List<Menu> tree(Long parentId);
+
+    List<Menu> privileges(@Param("parentId") Long parentId, @Param("roles") List<String> roles);
 
     List<Menu> findAll(Long parentId);
+
+    List<Menu> allByRole(String code);
 }
