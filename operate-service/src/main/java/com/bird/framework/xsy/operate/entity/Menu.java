@@ -18,7 +18,7 @@ public class Menu implements Serializable {
 
     private String category;
 
-    private Long parentId;
+    private Long parentId = 0L;
 
     private String url;
 

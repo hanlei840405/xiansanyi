@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface MenuMapper {
@@ -26,5 +27,5 @@ public interface MenuMapper {
 
     List<Menu> findAll(Long parentId);
 
-    List<Menu> allByRole(String code);
+    List<Map<String,Object>> allByRole(String code);
 }

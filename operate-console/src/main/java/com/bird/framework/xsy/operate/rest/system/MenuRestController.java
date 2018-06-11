@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,8 +69,8 @@ public class MenuRestController {
     }
 
     @RequestMapping("/allByRole")
-    public List<Menu> allByRole(String code) {
-        return menuService.allByRole(code);
+    public List<Tree<Long>> allByRole(String code) {
+        return convert2Tree(menuService.allByRole(code));
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -84,23 +85,40 @@ public class MenuRestController {
         return HttpStatus.OK.value();
     }
 
-    private List<Tree<Long>> convert2Tree(List<Menu> menus) {
+    /**
+     * @param menus 已按照parent排序
+     * @return
+     */
+    private List<Tree<Long>> convert2Tree(List<Map<String, Object>> menus) {
+        Map<Long, Tree<Long>> menuMap = new HashMap<>();
+        menus.forEach(menu -> {
+            if ((Long)menu.get("parent_id") == 0) { // 根级
+                Tree<Long> root = new Tree<>();
+                root.setId((Long) menu.get("id"));
+                root.setParentId(0L);
+                root.setText((String) menu.get("name"));
+                root.getAttributes().put("url", menu.get("url"));
+                Long roleId = (Long) menu.get("role_id");
+                if (roleId != null) {
+                    root.setChecked(true);
+                }
+                menuMap.put((Long) menu.get("id"), root);
+            } else { // 非根级,找到它的上级，追加到children中
+                Tree<Long> parent = menuMap.get(menu.get("parent_id"));
+                Tree<Long> node = new Tree<>();
+                node.setId((Long) menu.get("id"));
+                node.setParentId(node.getParentId());
+                node.setText((String) menu.get("name"));
+                node.getAttributes().put("url", menu.get("url"));
+                Long roleId = (Long) menu.get("role_id");
+                if (roleId != null) {
+                    node.setChecked(true);
+                }
+                parent.getChildren().add(node);
+            }
+        });
         List<Tree<Long>> trees = new ArrayList<>();
-        for (Menu menu : menus) {
-            if (menu.getParentId() == 0) {
-                trees.add(findChildren(menu,menus));
-            }
-        }
+        menuMap.values().forEach(value -> trees.add(value));
         return trees;
-    }
-
-    private Tree<Long> findChildren(Menu menu, List<Menu> menus) {
-        Tree<Long> tree = new Tree<>(menu.getId(), menu.getName(), null, );
-        for (Menu node : menus) {
-            if (node.getId().equals(node.getParentId())) {
-                tree.getChildren().add(findChildren(node, trees));
-            }
-        }
-        return tree;
     }
 }

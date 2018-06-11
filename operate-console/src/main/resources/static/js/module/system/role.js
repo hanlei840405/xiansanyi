@@ -34,23 +34,14 @@ $(function () {
                     $('#system_role_index_grant_dialog').dialog('open');
                     $.ajax({
                         method: 'get',
-                        url: 'rest/system/role/allByRole',
+                        url: 'rest/system/menu/allByRole',
                         data: {'code': selected.code},
                         success: function(res) {
-                            granted = res;
                             // 初始化菜单树
                             $('#system_role_index_grant_dialog_form_menu_tree').tree({
-                                url: 'rest/system/menu/tree',
-                                method: 'GET',
                                 checkbox: true,
                                 animate: true,
-                                onLoadSuccess: function(node, data) {
-                                    for(var i = 0;i < granted.length; i++) {
-                                        if(data.id == granted[i].id) {
-                                            $('#system_role_index_grant_dialog_form_menu_tree').tree(check, node.target);
-                                        }
-                                    }
-                                }
+                                data: res
                             });
                         }
                     });
