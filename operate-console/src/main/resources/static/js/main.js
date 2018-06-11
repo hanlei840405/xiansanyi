@@ -29,7 +29,6 @@ $(function () {
     $('#portal_center').tabs({
         border: false,
         onBeforeClose: function () {
-            debugger;
             var containId = $('#portal_center').tabs('getSelected')[0].id;
             for (var i = 0;i < destroyUI[containId].length; i++) {
                 var componentId = destroyUI[containId][i];
@@ -38,9 +37,22 @@ $(function () {
         }
     });
 });
-function registryDestroy(containId, componentId) {
-    if (destroyUI[containId].indexOf(componentId) == -1) {
-        destroyUI[containId].push(componentId);
+function registryDestroy(components) {
+    var containId = $('#portal_center').tabs('getSelected')[0].id;
+    for (var i = 0; i < components.length; i++) {
+        if (destroyUI[containId].indexOf(components[i]) == -1) {
+            destroyUI[containId].push(components[i]);
+        }
+    }
+}
+
+function destroyComponents(componentId) {
+    var containId = $('#portal_center').tabs('getSelected')[0].id;
+    for (var i = 0;i < destroyUI[containId].length; i++) {
+        var comp = destroyUI[containId][i];
+        if (comp == componentId)  {
+            $('#' + componentId).panel('destroy');
+        }
     }
 }
 

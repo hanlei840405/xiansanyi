@@ -190,6 +190,5 @@ $(function () {
         url: 'rest/system/menu/tree',
         method: 'get'
     });
-    var containId = $('#portal_center').tabs('getSelected')[0].id;
-    registryDestroy(containId, 'system_menu_index_edit_dialog');
+    registryDestroy(['system_menu_index_edit_dialog']);
 });

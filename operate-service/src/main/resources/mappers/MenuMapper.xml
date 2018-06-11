@@ -158,11 +158,12 @@
     </select>
     <select id="allByRole" resultType="map" parameterType="string">
         select
-        distinct t1.id, t1.code, t1.name, t1.category, t1.parent_id, t1.url, t3.id as role_id
+          t1.id, t1.code, t1.name, t1.category, t1.parent_id, t1.url, t4.state
         from operate_menu t1
-        left join operate_role_menu t2 on t1.id=t2.menu_id
-        left join operate_role t3 on t2.role_id=t3.id and t3.code = #{code}
+          left join
+          (select t2.menu_id,t2.state from operate_role_menu t2 inner join operate_role t3 on t2.role_id=t3.id where t3.code=#{code}) t4
+          on t1.id=t4.menu_id
         where t1.status='1'
-        order by t1.parent_id
+        order by t1.parent_id, t1.id
     </select>
 </mapper>

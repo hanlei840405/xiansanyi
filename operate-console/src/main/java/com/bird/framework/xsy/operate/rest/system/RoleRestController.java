@@ -4,6 +4,7 @@ import com.bird.framework.xsy.operate.entity.Role;
 import com.bird.framework.xsy.operate.service.RoleService;
 import com.github.pagehelper.Page;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("rest/system/role")
 public class RoleRestController {
@@ -42,6 +44,14 @@ public class RoleRestController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public int delete(Long id) {
         roleService.delete(id);
+        return HttpStatus.OK.value();
+    }
+
+    @RequestMapping(value = "/grant", method = RequestMethod.POST)
+    public int grant(Long id, String checked, String indeterminate) {
+        String[] checkedArary = checked.split(",");
+        String[] indeterminateArary = indeterminate.split(",");
+        roleService.grant(id, checkedArary, indeterminateArary);
         return HttpStatus.OK.value();
     }
 }

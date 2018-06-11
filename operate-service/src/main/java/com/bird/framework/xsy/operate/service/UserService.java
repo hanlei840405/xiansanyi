@@ -71,4 +71,21 @@ public class UserService {
             }
         });
     }
+
+    @Transactional
+    public void grant(Long userId, String[] array) {
+        jdbcTemplate.update("delete from operate_user_role where user_id=?", userId);
+        jdbcTemplate.batchUpdate("insert into operate_user_role (user_id, role_id) values (?, ?)", new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                preparedStatement.setLong(1, userId);
+                preparedStatement.setLong(2, Long.parseLong(array[i]));
+            }
+
+            @Override
+            public int getBatchSize() {
+                return array.length;
+            }
+        });
+    }
 }

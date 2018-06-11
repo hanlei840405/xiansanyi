@@ -91,6 +91,7 @@ public class MenuRestController {
      */
     private List<Tree<Long>> convert2Tree(List<Map<String, Object>> menus) {
         Map<Long, Tree<Long>> menuMap = new HashMap<>();
+        List<Long> addedMenus = new ArrayList<>();
         menus.forEach(menu -> {
             if ((Long)menu.get("parent_id") == 0) { // 根级
                 Tree<Long> root = new Tree<>();
@@ -98,8 +99,8 @@ public class MenuRestController {
                 root.setParentId(0L);
                 root.setText((String) menu.get("name"));
                 root.getAttributes().put("url", menu.get("url"));
-                Long roleId = (Long) menu.get("role_id");
-                if (roleId != null) {
+                String state = (String) menu.get("state");
+                if ("1".equals(state)) {
                     root.setChecked(true);
                 }
                 menuMap.put((Long) menu.get("id"), root);
@@ -110,11 +111,14 @@ public class MenuRestController {
                 node.setParentId(node.getParentId());
                 node.setText((String) menu.get("name"));
                 node.getAttributes().put("url", menu.get("url"));
-                Long roleId = (Long) menu.get("role_id");
-                if (roleId != null) {
+                String state = (String) menu.get("state");
+                if ("1".equals(state)) {
                     node.setChecked(true);
                 }
-                parent.getChildren().add(node);
+                if (!addedMenus.contains(node.getId())) {
+                    parent.getChildren().add(node);
+                    addedMenus.add(node.getId());
+                }
             }
         });
         List<Tree<Long>> trees = new ArrayList<>();
