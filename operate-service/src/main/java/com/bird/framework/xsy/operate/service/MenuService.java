@@ -5,17 +5,19 @@ import com.bird.framework.xsy.operate.mapper.MenuMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("operateMenuService")
 public class MenuService {
 
     @Autowired
     private MenuMapper menuMapper;
     @Autowired
+    @Qualifier("operateSequenceService")
     private SequenceService sequenceService;
 
     public Menu selectById(Long id) {

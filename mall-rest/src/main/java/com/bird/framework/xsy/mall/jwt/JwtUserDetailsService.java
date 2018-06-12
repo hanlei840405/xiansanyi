@@ -6,6 +6,7 @@ import com.bird.framework.xsy.mall.service.RoleService;
 import com.bird.framework.xsy.mall.service.UserPasswordRecordService;
 import com.bird.framework.xsy.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,10 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
+    @Qualifier("mallUserService")
     private UserService userService;
     @Autowired
+    @Qualifier("mallUserPasswordRecordService")
     private UserPasswordRecordService userPasswordRecordService;
     @Autowired
+    @Qualifier("mallRoleService")
     private RoleService roleService;
 
     @Override

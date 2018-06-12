@@ -5,7 +5,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("mallSequenceService")
 public class SequenceService {
 
     @Autowired

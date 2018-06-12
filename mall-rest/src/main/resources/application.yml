@@ -8,7 +8,7 @@ spring:
     host: 116.196.104.38
     port: 6379
 mybatis:
-  mapperLocations: classpath:mappers/*.xml
+  mapperLocations: classpath*:mappers/*.xml
 
 pagehelper:
   helperDialect: mysql

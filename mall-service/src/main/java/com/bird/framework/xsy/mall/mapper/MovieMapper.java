@@ -1,10 +1,12 @@
 package com.bird.framework.xsy.mall.mapper;
 
 import com.bird.framework.xsy.mall.entity.Movie;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface MovieMapper {
     int deleteByPrimaryKey(Long id);
 

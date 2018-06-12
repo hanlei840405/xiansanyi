@@ -1,5 +1,6 @@
 package com.bird.framework.xsy.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;

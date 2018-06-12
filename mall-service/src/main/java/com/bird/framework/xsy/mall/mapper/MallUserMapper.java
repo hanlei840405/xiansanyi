@@ -4,7 +4,7 @@ import com.bird.framework.xsy.mall.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserMapper {
+public interface MallUserMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(User record);

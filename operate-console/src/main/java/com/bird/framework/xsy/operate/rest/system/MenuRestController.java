@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("rest/system/menu")
 public class MenuRestController {
     @Autowired
+    @Qualifier("operateMenuService")
     private MenuService menuService;
 
     @RequestMapping("/id")

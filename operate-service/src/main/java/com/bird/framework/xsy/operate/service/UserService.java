@@ -5,6 +5,7 @@ import com.bird.framework.xsy.operate.mapper.UserMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,12 @@ import java.sql.SQLException;
 /**
  * @author jesse.Han
  */
-@Service
+@Service("operateUserService")
 public class UserService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
+    @Qualifier("operateSequenceService")
     private SequenceService sequenceService;
     @Autowired
     private JdbcTemplate jdbcTemplate;

@@ -1,8 +1,10 @@
 package com.bird.framework.xsy.mall.mapper;
 
 import com.bird.framework.xsy.mall.entity.UserPasswordRecord;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface UserPasswordRecordMapper {
+@Mapper
+public interface MallUserPasswordRecordMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(UserPasswordRecord record);

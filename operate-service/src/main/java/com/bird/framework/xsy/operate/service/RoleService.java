@@ -5,6 +5,7 @@ import com.bird.framework.xsy.operate.mapper.RoleMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,12 @@ import java.util.List;
 /**
  * @author jesse.Han
  */
-@Service
+@Service("operateRoleService")
 public class RoleService {
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
+    @Qualifier("operateSequenceService")
     private SequenceService sequenceService;
     @Autowired
     private JdbcTemplate jdbcTemplate;

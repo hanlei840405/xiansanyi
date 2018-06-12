@@ -20,8 +20,8 @@ import java.util.Map;
  * @author jesse.Han
  */
 @Configuration
-@ComponentScan("com.bird.framework.xsy.operate.service")
-@MapperScan("com.bird.framework.xsy.operate.mapper")
+@ComponentScan({"com.bird.framework.xsy.operate.service","com.bird.framework.xsy.mall.service"})
+@MapperScan({"com.bird.framework.xsy.operate.mapper","com.bird.framework.xsy.mall.mapper"})
 public class ServiceConfig {
     @Value("${spring.redis.host}")
     private String host;

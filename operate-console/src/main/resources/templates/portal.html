@@ -12,8 +12,12 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',border:true" style="height:70px;padding:5px">
-    <p style="margin: 40px 20px 1px 0px; float: right;"><span th:text="${user.firstName + user.lastName}"></span> <a href="http://test.ssa.jd.com/sso/logout">logout</a>
-    </p>
+    <form th:action="@{/logout}" method="post">
+        <p style="margin: 40px 20px 1px 0px; float: right;">
+            <span th:text="${user.lastName + user.firstName}"></span><input class="easyui-linkbutton" type="submit"
+                                                                            value="Sign Out"/>
+        </p>
+    </form>
 </div>
 <div data-options="region:'west',split:true,title:'功能菜单',border:true" style="width:15%;padding:10px 0px 10px 0px">
     <ul id="portal_menu"></ul>

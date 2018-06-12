@@ -2,8 +2,9 @@ package com.bird.framework.xsy.mall.service;
 
 import com.bird.framework.xsy.mall.entity.User;
 import com.bird.framework.xsy.mall.entity.UserPasswordRecord;
-import com.bird.framework.xsy.mall.mapper.UserMapper;
+import com.bird.framework.xsy.mall.mapper.MallUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -12,21 +13,23 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@Service
+@Service("mallUserService")
 public class UserService {
     @Autowired
-    private UserMapper userMapper;
+    private MallUserMapper mallUserMapper;
     @Autowired
+    @Qualifier("mallSequenceService")
     private SequenceService sequenceService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
+    @Qualifier("mallUserPasswordRecordService")
     private UserPasswordRecordService userPasswordRecordService;
 
     public User selectByUsername(String username) {
-        return userMapper.selectByUsername(username);
+        return mallUserMapper.selectByUsername(username);
     }
 
 
@@ -34,12 +37,12 @@ public class UserService {
     public void save(User user) {
         if (user.getId() != null) {
             // update
-            userMapper.updateByPrimaryKeySelective(user);
+            mallUserMapper.updateByPrimaryKeySelective(user);
         } else {
             // insert
             String username = sequenceService.generate("mall-user", "%08d");
             user.setUsername(username);
-            userMapper.insert(user);
+            mallUserMapper.insert(user);
             UserPasswordRecord userPasswordRecord = new UserPasswordRecord();
             userPasswordRecord.setUserId(user.getId());
             userPasswordRecord.setCreated(new java.util.Date());

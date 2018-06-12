@@ -5,6 +5,7 @@ import com.bird.framework.xsy.mall.mapper.MovieMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ public class MovieService {
     @Autowired
     private MovieMapper movieMapper;
     @Autowired
+    @Qualifier("mallSequenceService")
     private SequenceService sequenceService;
 
     public Movie selectById(Long id) {
