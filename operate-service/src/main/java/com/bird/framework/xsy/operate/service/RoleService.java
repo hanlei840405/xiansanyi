@@ -34,6 +34,10 @@ public class RoleService {
         return roleMapper.selectByUsername(username);
     }
 
+    public List<Role> all() {
+        return roleMapper.findAll();
+    }
+
     public Page<Role> page(Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         Page<Role> page = (Page<Role>) roleMapper.findAll();

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -24,6 +25,11 @@ public class RoleRestController {
     @RequestMapping("/id")
     public Role id(Long id) {
         return roleService.selectById(id);
+    }
+
+    @RequestMapping("/all")
+    public List<Role> all() {
+        return roleService.all();
     }
 
     @RequestMapping("/page")

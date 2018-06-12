@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bird.framework.xsy.mall.mapper.MovieMapper">
+    <resultMap id="BaseResultMap" type="com.bird.framework.xsy.mall.entity.Movie">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="cinema" jdbcType="VARCHAR" property="cinema"/>
+        <result column="movie" jdbcType="VARCHAR" property="movie"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="discount" jdbcType="INTEGER" property="discount"/>
+        <result column="fee" jdbcType="INTEGER" property="fee"/>
+        <result column="buyer" jdbcType="VARCHAR" property="buyer"/>
+        <result column="seller" jdbcType="VARCHAR" property="seller"/>
+        <result column="paid" jdbcType="TIMESTAMP" property="paid"/>
+        <result column="payload" jdbcType="VARCHAR" property="payload"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="sent2seller" jdbcType="TIMESTAMP" property="sent2seller"/>
+        <result column="sent2buyer" jdbcType="TIMESTAMP" property="sent2buyer"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, code, location, cinema, movie, time, mobile, price, discount, fee, buyer, seller,
+        paid, payload, created, sent2seller, sent2buyer, status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_movie
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        update mall_movie set status='0'
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.bird.framework.xsy.mall.entity.Movie">
+        insert into mall_movie (id, code, location,
+        cinema, movie, time,
+        mobile, price, discount,
+        fee, buyer, seller,
+        paid, payload, created,
+        sent2seller, sent2buyer, status)
+        values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR},
+        #{cinema,jdbcType=VARCHAR}, #{movie,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+        #{mobile,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER},
+        #{fee,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR},
+        #{paid,jdbcType=TIMESTAMP}, #{payload,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+        #{sent2seller,jdbcType=TIMESTAMP}, #{sent2buyer,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.bird.framework.xsy.mall.entity.Movie">
+        insert into mall_movie
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="cinema != null">
+                cinema,
+            </if>
+            <if test="movie != null">
+                movie,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="buyer != null">
+                buyer,
+            </if>
+            <if test="seller != null">
+                seller,
+            </if>
+            <if test="paid != null">
+                paid,
+            </if>
+            <if test="payload != null">
+                payload,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="sent2seller != null">
+                sent2seller,
+            </if>
+            <if test="sent2buyer != null">
+                sent2buyer,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="cinema != null">
+                #{cinema,jdbcType=VARCHAR},
+            </if>
+            <if test="movie != null">
+                #{movie,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=INTEGER},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=INTEGER},
+            </if>
+            <if test="buyer != null">
+                #{buyer,jdbcType=VARCHAR},
+            </if>
+            <if test="seller != null">
+                #{seller,jdbcType=VARCHAR},
+            </if>
+            <if test="paid != null">
+                #{paid,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payload != null">
+                #{payload,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sent2seller != null">
+                #{sent2seller,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sent2buyer != null">
+                #{sent2buyer,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.mall.entity.Movie">
+        update mall_movie
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="cinema != null">
+                cinema = #{cinema,jdbcType=VARCHAR},
+            </if>
+            <if test="movie != null">
+                movie = #{movie,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=INTEGER},
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=INTEGER},
+            </if>
+            <if test="buyer != null">
+                buyer = #{buyer,jdbcType=VARCHAR},
+            </if>
+            <if test="seller != null">
+                seller = #{seller,jdbcType=VARCHAR},
+            </if>
+            <if test="paid != null">
+                paid = #{paid,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payload != null">
+                payload = #{payload,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sent2seller != null">
+                sent2seller = #{sent2seller,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sent2buyer != null">
+                sent2buyer = #{sent2buyer,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.mall.entity.Movie">
+        update mall_movie
+        set code = #{code,jdbcType=VARCHAR},
+        location = #{location,jdbcType=VARCHAR},
+        cinema = #{cinema,jdbcType=VARCHAR},
+        movie = #{movie,jdbcType=VARCHAR},
+        time = #{time,jdbcType=TIMESTAMP},
+        mobile = #{mobile,jdbcType=VARCHAR},
+        price = #{price,jdbcType=INTEGER},
+        discount = #{discount,jdbcType=INTEGER},
+        fee = #{fee,jdbcType=INTEGER},
+        buyer = #{buyer,jdbcType=VARCHAR},
+        seller = #{seller,jdbcType=VARCHAR},
+        paid = #{paid,jdbcType=TIMESTAMP},
+        payload = #{payload,jdbcType=VARCHAR},
+        created = #{created,jdbcType=TIMESTAMP},
+        sent2seller = #{sent2seller,jdbcType=TIMESTAMP},
+        sent2buyer = #{sent2buyer,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByMultiParams" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_movie
+        where 1=1
+        <if test="location != null">
+            and location=#{location}
+        </if>
+        <if test="cinema != null">
+            and cinema=#{cinema}
+        </if>
+        <if test="movie != null">
+            and movie=#{movie}
+        </if>
+        <if test="buyer != null">
+            and buyer=#{buyer}
+        </if>
+        <if test="seller != null">
+            and seller=#{seller}
+        </if>
+        <if test="mobile != null">
+            and mobile=#{mobile}
+        </if>
+    </select>
+</mapper>

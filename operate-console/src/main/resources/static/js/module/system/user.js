@@ -231,11 +231,10 @@ $(function () {
     });
 
     $('#system_user_index_grant_dialog_role_dataGrid').datagrid({
-        url: 'rest/system/role/page',
+        url: 'rest/system/role/all',
         method: 'GET',
         rownumbers: true,
-        pagination: true,
-        rows: 9999,
+        pagination: false,
         idField: 'id',
         fit: true,
         border: false,
