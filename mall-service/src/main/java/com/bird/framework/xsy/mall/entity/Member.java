@@ -1,11 +1,10 @@
 package com.bird.framework.xsy.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * mall_user
@@ -13,12 +12,13 @@ import java.util.List;
  * @author
  */
 @Data
-public class User implements Serializable {
+public class Member implements Serializable {
     private static final long serialVersionUID = 980396937362462211L;
     private Long id;
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String nick;
@@ -29,11 +29,13 @@ public class User implements Serializable {
 
     private String mobile;
 
+    private String role;
+
+    private String gender;
+
     private String status;
 
     private Integer version;
 
     private Date created;
-
-    private List<Role> roles = new ArrayList<>();
 }

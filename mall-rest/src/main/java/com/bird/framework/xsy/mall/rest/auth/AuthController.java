@@ -1,6 +1,6 @@
 package com.bird.framework.xsy.mall.rest.auth;
 
-import com.bird.framework.xsy.mall.entity.User;
+import com.bird.framework.xsy.mall.entity.Member;
 import com.bird.framework.xsy.mall.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(User user) {
-        return authService.signUp(user);
+    public String signUp(Member member) {
+        return authService.signUp(member);
     }
 }

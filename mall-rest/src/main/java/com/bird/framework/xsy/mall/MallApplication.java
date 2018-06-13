@@ -14,14 +14,14 @@ public class MallApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(MallApplication.class, args);
-//        UserService userService = configurableApplicationContext.getBean(UserService.class);
+//        MemberService userService = configurableApplicationContext.getBean(MemberService.class);
 //        RoleService roleService = configurableApplicationContext.getBean(RoleService.class);
 //        Role role = new Role();
 //        role.setName("BUYER");
 //        role.setStatus("1");
 //        role.setVersion(1);
 //        roleService.save(role);
-//        User user = new User();
+//        Member user = new Member();
 //        user.setFirstName("磊");
 //        user.setLastName("韩");
 //        user.setMobile("18615267773");

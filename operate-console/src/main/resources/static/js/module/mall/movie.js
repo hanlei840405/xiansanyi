@@ -53,19 +53,35 @@ $(function () {
         }],
         columns: [[
             {field: 'ck', checkbox: true},
-            {field: 'code', title: '编号', width: 170, align: 'right'},
+            {field: 'code', title: '编号', width: 150, align: 'right'},
             {field: 'location', title: '地址', width: 300, align: 'right'},
-            {field: 'cinema', title: '影院', width: 170, align: 'right'},
-            {field: 'movie', title: '片名', width: 170, align: 'right'},
-            {field: 'buyer', title: '买家', width: 170, align: 'right'},
-            {field: 'mobile', title: '电话', width: 170, align: 'right'},
-            {field: 'seller', title: '卖家', width: 170, align: 'right'}
+            {field: 'cinema', title: '影院', width: 145, align: 'right'},
+            {field: 'movie', title: '片名', width: 145, align: 'right'},
+            {field: 'buyer', title: '买家', width: 145, align: 'right'},
+            {field: 'mobile', title: '电话', width: 145, align: 'right'},
+            {field: 'seller', title: '卖家', width: 145, align: 'right'},
+            {field: 'status', title: '状态', width: 140, align: 'right', formatter: function(value){
+                if(value == '0') {
+                    return '取消';
+                } else if(value == '1') {
+                    return '新建待支付';
+                } else if(value == '2') {
+                    return '已支付';
+                } else if(value == '3') {
+                    return '平台推送卖家';
+                } else if(value == '4') {
+                    return '卖家签收';
+                } else if(value == '5') {
+                    return '卖家推送给平台';
+                } else if(value == '6') {
+                    return '待平台审核';
+                } else if(value == '7') {
+                    return '平台推送给买家';
+                }else {
+                    return '完成';
+                }
+            }}
         ]],
-        rowStyler: function (index, row) {
-            if (row.status == '0') {
-                return 'background-color:#6293BB;color:#fff;';
-            }
-        },
         onLoadSuccess: function () {
             $('#mall_movie_index_dataGrid').datagrid('clearSelections');
         }

@@ -9,8 +9,9 @@ $(function () {
         animate: true,
         onClick: function (node) {
             if (node.attributes && node.attributes.url && node.attributes.url != null && node.attributes.url != '') {
-                if ($('#portal_center').tabs('exists', node.id)) {
-                    $('#portal_center').tabs('select', node.id);
+                debugger;
+                if ($('#portal_center').tabs('exists', node.text)) {
+                    $('#portal_center').tabs('select', node.text);
                 } else {
                     $('#portal_center').tabs('add', {
                         id: node.id,

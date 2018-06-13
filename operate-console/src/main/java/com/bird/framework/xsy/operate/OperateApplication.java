@@ -73,7 +73,7 @@ public class OperateApplication {
 //        network.setStatus("1");
 //        network.setVersion(1);
 //        menuService.save(network);
-//		User user = new User();
+//		Member user = new Member();
 //		user.setFirstName("磊");
 //		user.setLastName("韩");
 //		user.setMobile("18615267773");

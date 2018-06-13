@@ -15,6 +15,12 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  rabbitmq:
+    host: 116.196.112.85
+    port: 5672
+    username: ruguiniao
+    password: 1qaz@WSX?
+
 mybatis:
   mapperLocations: classpath*:mappers/*.xml
 

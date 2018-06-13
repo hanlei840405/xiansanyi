@@ -6,7 +6,6 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,9 +41,14 @@ public class MovieRestController {
         return HttpStatus.OK.value();
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public int delete(Long id) {
-        movieService.delete(id);
-        return HttpStatus.OK.value();
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public int cancel(Long id) {
+        Movie movie = movieService.selectById(id);
+        int modified = movieService.calcel(movie);
+        if (modified > 0) {
+            return HttpStatus.OK.value();
+        } else {
+            return HttpStatus.NOT_FOUND.value();
+        }
     }
 }

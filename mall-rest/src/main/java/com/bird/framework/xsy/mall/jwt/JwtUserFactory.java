@@ -1,7 +1,7 @@
 package com.bird.framework.xsy.mall.jwt;
 
-import com.bird.framework.xsy.mall.entity.User;
-import com.bird.framework.xsy.mall.entity.UserPasswordRecord;
+import com.bird.framework.xsy.mall.entity.Member;
+import com.bird.framework.xsy.mall.entity.PasswordRecord;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
@@ -12,12 +12,12 @@ public final class JwtUserFactory {
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(User user, UserPasswordRecord userPasswordRecord, List<String> authorities) {
+    public static JwtUser create(Member member, PasswordRecord passwordRecord, List<String> authorities) {
         return new JwtUser(
-                user.getUsername(),
-                user.getPassword(),
+                member.getUsername(),
+                member.getPassword(),
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()),
-                userPasswordRecord == null ? null : userPasswordRecord.getCreated()
+                passwordRecord == null ? null : passwordRecord.getCreated()
         );
     }
 }
