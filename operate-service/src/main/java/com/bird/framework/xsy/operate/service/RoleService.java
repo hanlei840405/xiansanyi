@@ -78,30 +78,30 @@ public class RoleService {
     }
 
     @Transactional
-    public void grant(Long roleId, String[] checkedArary, String[] indeterminateArary) {
+    public void grant(Long roleId, List<Long> checkedArary, List<Long> indeterminateArary) {
         jdbcTemplate.update("delete from operate_role_menu where role_id=?", roleId);
         jdbcTemplate.batchUpdate("insert into operate_role_menu (role_id, menu_id, state) values (?, ?, '1')", new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                 preparedStatement.setLong(1, roleId);
-                preparedStatement.setLong(2, Long.parseLong(checkedArary[i]));
+                preparedStatement.setLong(2, checkedArary.get(i));
             }
 
             @Override
             public int getBatchSize() {
-                return checkedArary.length;
+                return checkedArary.size();
             }
         });
         jdbcTemplate.batchUpdate("insert into operate_role_menu (role_id, menu_id, state) values (?, ?, '0')", new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                 preparedStatement.setLong(1, roleId);
-                preparedStatement.setLong(2, Long.parseLong(indeterminateArary[i]));
+                preparedStatement.setLong(2, indeterminateArary.get(i));
             }
 
             @Override
             public int getBatchSize() {
-                return indeterminateArary.length;
+                return indeterminateArary.size();
             }
         });
     }
