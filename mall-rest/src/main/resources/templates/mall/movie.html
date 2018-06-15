@@ -1,7 +1,7 @@
 <div th:replace="head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 <body ontouchstart>
 
-<header style="padding: 20px 15px;">
+<header style="padding: 20px 15px;font-size: 20px;">
     <i class="iconfont icon-dianying"></i>影票
 </header>
 <div class="weui-cells weui-cells_form">
@@ -28,13 +28,27 @@
             <label class="weui-label" for="time">场次时间</label>
         </div>
         <div class="weui-cell__bd">
-            <input class="weui-input" type="datetime-local" id="time" name="time" placeholder="场次时间">
+            <input class="weui-input" type="text" id="time" name="time" placeholder="场次时间">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label" for="screen">屏幕类型</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="screen" name="screen" placeholder="场次时间" readonly>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="officialPrice" class="weui-label">官方价格</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="officialPrice" name="officialPrice" type="number" placeholder="官方价格" readonly>
         </div>
     </div>
     <div class="weui-cell">
         <div class="weui-cell__hd"><label for="price" class="weui-label">期望票价</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" id="price" name="price" type="number" placeholder="原价的5至7折">
+            <input class="weui-input" id="price" name="price" type="number" placeholder="原官方价格的5至7折">
         </div>
     </div>
     <div class="weui-btn-area">
@@ -45,67 +59,120 @@
 <div th:replace="js" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 <script src="js/times.js"></script>
 <script type="text/javascript">
-  var isOpen = false;
-  var selectLocation;
-      $("#location").cityPicker({
+    $("#location").cityPicker({
         title: "选择城市",
         onChange: function (picker, values, displayValues) {
-          selectLocation=values[2];
-        }
-      });
-
-      $("#cinema").bind('focus', function(e) {
-        if (!isOpen) {
-          isOpen =true;
-          // 选择电影院
-          $.ajax({
-            url: 'api/movie/cinema/' + selectLocation,
-            method: 'post',
-            success: function(res) {
-              var array = new Array();
-              for(var i = 0;i < res.length;i++) {
-                var item = {'title': res[i].name, 'value': res[i].code};
-                array.push(item);
-              }
-              $("#cinema").select({
-                title: "选择影院",
-                items: array,
-                onClose: function(){
-                  isOpen = false; 
-                }
-              });
+            selectLocation = values[2];
+            if (values && values[2]) {
+                // 选择电影院
+                $.ajax({
+                    url: 'api/movie/cinema/' + values[2],
+                    method: 'post',
+                    success: function (res) {
+                        var array = new Array();
+                        for (var i = 0; i < res.length; i++) {
+                            var item = {'title': res[i].name, 'value': res[i].code};
+                            array.push(item);
+                        }
+                        $("#cinema").select("update", {items: array});
+                    }
+                });
             }
-          });
         }
-      });
+    });
 
-      // 选择电影
-      $("#movie").bind('focus', function(e) {
-        if (!isOpen) {
-          isOpen =true;
-          
-          if ($("#cinema").attr('data-values')) {
-            $.ajax({
-              url: 'api/movie/film/' + $("#cinema").attr('data-values'),
-              method: 'post',
-              success: function(res) {
-              var array = new Array();
-              for(var i = 0;i < res.length;i++) {
-                var item = {'title': res[i].title, 'value': res[i].movieId};
-                array.push(item);
-              }
-              $("#movie").select({
-                title: "选择影院",
-                items: array,
-                onClose: function(){
-                  isOpen = false; 
-                }
-              });
-              }
-            });
-          }
-          $.ajax(
+    $("#cinema").select({
+        title: "选择影院",
+        items: [],
+        onChange: function (value) {
+            if (value.values) {
+                // 选择电影院
+                $.ajax({
+                    url: 'api/movie/film/' + value.values,
+                    method: 'post',
+                    success: function (res) {
+                        var array = new Array();
+                        for (var i = 0; i < res.length; i++) {
+                            var item = {'title': res[i].title, 'value': res[i].movieId};
+                            array.push(item);
+                        }
+                        $("#movie").select("update", {items: array});
+                    }
+                });
+            }
         }
-      });
+    });
+
+    $("#movie").select({
+        title: "选择影片",
+        items: [],
+        onChange: function (value) {
+            if (value.values) {
+                // 选择时间
+                $.ajax({
+                    url: 'api/movie/times/' + $("#cinema").attr('data-values') + '/' + value.values,
+                    method: 'post',
+                    success: function (res) {
+                        var array = new Array();
+                        for (var i = 0; i < res.length; i++) {
+                            var ymd = res[i].date;
+                            for (var j = 0; j < res[i].showtimes.length; j++) {
+                                var hm = res[i].showtimes[j];
+                                var item = {
+                                    'title': ymd + ' ' + hm.timeReal,
+                                    'value': hm.version + ',' + hm.salePrice
+                                };
+                                array.push(item);
+                            }
+                        }
+                        $("#time").select("update", {items: array});
+                    }
+                });
+            }
+        }
+    });
+
+    $("#time").select({
+        title: "选择时间",
+        items: [],
+        onClose: function (ele) {
+            var values = ele.data.values.split(',');
+            $('#screen').val(values[0]);
+            $('#officialPrice').val(values[1]);
+        }
+    });
+
+    // 选择时间
+    // $("#time").bind('click', function (e) {
+    //     if (!isOpen) {
+    //         isOpen = true;
+    //
+    //         if ($("#cinema").attr('data-values') && $("#movie").attr('data-values')) {
+    //             $.ajax({
+    //                 url: 'api/movie//times/' + $("#cinema").attr('data-values') + '/' +  $("#movie").attr('data-values'),
+    //                 method: 'post',
+    //                 success: function (res) {
+    //                     var array = new Array();
+    //                     for (var i = 0; i < res.length; i++) {
+    //                         var item = {'title': res[i].title, 'value': res[i].movieId};
+    //                         array.push(item);
+    //                     }
+    //                     $("#movie").select({
+    //                         title: "选择电影",
+    //                         items: array,
+    //                         onClose: function () {
+    //                             isOpen = false;
+    //                         }
+    //                     });
+    //                 },
+    //                 error: function (res) {
+    //                     isOpen = false;
+    //                 }
+    //             });
+    //         } else {
+    //             isOpen = false;
+    //         }
+    //     }
+    // });
 </script>
 </html>

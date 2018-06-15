@@ -7,6 +7,7 @@
         <result column="location" jdbcType="VARCHAR" property="location"/>
         <result column="cinema" jdbcType="VARCHAR" property="cinema"/>
         <result column="movie" jdbcType="VARCHAR" property="movie"/>
+        <result column="screen" jdbcType="VARCHAR" property="screen"/>
         <result column="time" jdbcType="TIMESTAMP" property="time"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="price" jdbcType="INTEGER" property="price"/>
@@ -30,7 +31,7 @@
         <result column="finished" jdbcType="TIMESTAMP" property="finished"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, code, location, cinema, movie, time, mobile, price, discount, fee, buyer, created,
+        id, code, location, cinema, movie, screen, time, mobile, price, discount, fee, buyer, created,
         paid, pay_no, payment, sent2seller, seller, assigned, payload, sent2audit, sent2buyer,
         cancelled, reason, status, version, finished
     </sql>
@@ -46,7 +47,7 @@
     </delete>
     <insert id="insert" parameterType="com.bird.framework.xsy.mall.entity.Movie">
         insert into mall_movie (id, code, location,
-        cinema, movie, time,
+        cinema, movie, screen, time,
         mobile, price, discount,
         fee, buyer, created,
         paid, pay_no, payment,
@@ -55,7 +56,7 @@
         cancelled, reason, status,
         version, finished)
         values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR},
-        #{cinema,jdbcType=VARCHAR}, #{movie,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+        #{cinema,jdbcType=VARCHAR}, #{movie,jdbcType=VARCHAR}, #{screen,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
         #{mobile,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER},
         #{fee,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
         #{paid,jdbcType=TIMESTAMP}, #{payNo,jdbcType=VARCHAR}, #{payment,jdbcType=INTEGER},
@@ -81,6 +82,9 @@
             </if>
             <if test="movie != null">
                 movie,
+            </if>
+            <if test="screen != null">
+                screen,
             </if>
             <if test="time != null">
                 time,
@@ -162,6 +166,9 @@
             <if test="movie != null">
                 #{movie,jdbcType=VARCHAR},
             </if>
+            <if test="screen != null">
+                #{screen,jdbcType=VARCHAR},
+            </if>
             <if test="time != null">
                 #{time,jdbcType=TIMESTAMP},
             </if>
@@ -242,6 +249,9 @@
             <if test="movie != null">
                 movie = #{movie,jdbcType=VARCHAR},
             </if>
+            <if test="screen != null">
+                screen = #{screen,jdbcType=VARCHAR},
+            </if>
             <if test="time != null">
                 time = #{time,jdbcType=TIMESTAMP},
             </if>
@@ -314,6 +324,7 @@
         location = #{location,jdbcType=VARCHAR},
         cinema = #{cinema,jdbcType=VARCHAR},
         movie = #{movie,jdbcType=VARCHAR},
+        screen = #{screen,jdbcType=VARCHAR},
         time = #{time,jdbcType=TIMESTAMP},
         mobile = #{mobile,jdbcType=VARCHAR},
         price = #{price,jdbcType=INTEGER},

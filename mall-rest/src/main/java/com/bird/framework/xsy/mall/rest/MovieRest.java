@@ -58,10 +58,11 @@ public class MovieRest {
     }
 
     @RequestMapping("/film/{cinema}")
-    public List<Map<String,Object>> films(@PathVariable("cinema") String cinema) throws IOException {
+    public List<Map<String, Object>> films(@PathVariable("cinema") String cinema) throws IOException {
         TimeCinema timeCinema = timeCinemaService.selectByCinema(cinema);
         if (timeCinema != null) {
-            RBucket<List<Map<String,Object>>> bucket = redissonClient.getBucket("film.cinema." + cinema);
+            RBucket<List<Map<String, Object>>> bucket = redissonClient.getBucket("film.cinema." + cinema);
+            bucket.delete();
             if (!bucket.isExists()) {
                 RestTemplate restTemplate = new RestTemplate();
                 ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://service.theater.mtime.com/Cinema.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Cinema.Services&Ajax_CallBackMethod=GetOnlineMoviesInTheater&Ajax_CallBackArgument0=" + cinema, String.class);
@@ -73,6 +74,44 @@ public class MovieRest {
                 return movies;
             }
             return bucket.get();
+        }
+        return null;
+    }
+
+    @RequestMapping("/times/{cinema}/{movieId}")
+    public List<Map<String, Object>> times(@PathVariable("cinema") String cinema, @PathVariable("movieId") int movieId) throws IOException {
+        TimeCinema timeCinema = timeCinemaService.selectByCinema(cinema);
+        if (timeCinema != null) {
+            RBucket<List<Map<String, Object>>> bucket = redissonClient.getBucket("film.cinema." + cinema);
+            if (!bucket.isExists()) {
+                return null;
+            }
+            List<Map<String, Object>> results = bucket.get();
+            for (Map<String, Object> result : results) {
+                int cached = (int) result.get("movieId");
+
+                if (movieId == cached) { // 存在该影片， 允许获取上映场次时间
+                    RBucket<List<Map<String, Object>>> timeBucket = redissonClient.getBucket("film.time." + cinema + "." + movieId); // 获取每天时间的缓存，减少调用服务器次数
+                    if (!timeBucket.isExists()) {
+                        RestTemplate restTemplate = new RestTemplate();
+                        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://service.theater.mtime.com/Cinema.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Cinema.Services&Ajax_CallBackMethod=GetOnlineTicketShowtime&Ajax_CallBackArgument0=" + movieId + "&Ajax_CallBackArgument1=" + cinema, String.class);
+                        String body = responseEntity.getBody().replace("var getOnlineTicketShowtimeResult = ", "");
+                        Map<String, Object> content = objectMapper.readValue(body, Map.class);
+                        Map<String, Object> info = (Map<String, Object>) content.get("value");
+                        List<Map<String, Object>> dateShowtimes = (List<Map<String, Object>>) info.get("dateShowtimes");
+                        timeBucket.set(dateShowtimes);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.DATE, 1);
+                        calendar.set(Calendar.HOUR, 0);
+                        calendar.set(Calendar.MINUTE, 0);
+                        calendar.set(Calendar.SECOND, 0);
+                        timeBucket.expireAt(calendar.getTime()); // 每天凌晨0点失效
+                        return dateShowtimes;
+                    } else {
+                        return timeBucket.get();
+                    }
+                }
+            }
         }
         return null;
     }
