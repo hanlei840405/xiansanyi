@@ -17,7 +17,7 @@ import java.sql.SQLException;
 /**
  * @author jesse.Han
  */
-@Service("operateUserService")
+@Service
 public class UserService {
     @Autowired
     private UserMapper userMapper;

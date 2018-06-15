@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bird.framework.xsy.mall.mapper.CityTimeMapper">
+    <resultMap id="BaseResultMap" type="com.bird.framework.xsy.mall.entity.CityTime">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="city_code" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="time_code" jdbcType="VARCHAR" property="timeCode"/>
+        <result column="category" jdbcType="CHAR" property="category"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, city_code, time_code, category
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_city_time
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_city_time
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.bird.framework.xsy.mall.entity.CityTime">
+        insert into mall_city_time (id, city_code, time_code, category
+        )
+        values (#{id,jdbcType=BIGINT}, #{cityCode,jdbcType=VARCHAR}, #{timeCode,jdbcType=VARCHAR},
+        #{category,jdbcType=CHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.bird.framework.xsy.mall.entity.CityTime">
+        insert into mall_city_time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cityCode != null">
+                city_code,
+            </if>
+            <if test="timeCode != null">
+                time_code,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="cityCode != null">
+                #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="timeCode != null">
+                #{timeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.mall.entity.CityTime">
+        update mall_city_time
+        <set>
+            <if test="cityCode != null">
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="timeCode != null">
+                time_code = #{timeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.mall.entity.CityTime">
+        update mall_city_time
+        set city_code = #{cityCode,jdbcType=VARCHAR},
+        time_code = #{timeCode,jdbcType=VARCHAR}
+        category = #{category,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_city_time
+    </select>
+    <select id="findByCategory" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_city_time
+        where category = #{category}
+    </select>
+    <select id="selectByTimeCode" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_city_time
+        where time_code = #{timeCode}
+    </select>
+    <select id="selectByCityCode" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_city_time
+        where city_code = #{cityCode}
+    </select>
+</mapper>

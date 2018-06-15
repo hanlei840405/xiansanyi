@@ -1,25 +1,33 @@
 package com.bird.framework.xsy.mall.rest;
 
+import com.bird.framework.xsy.mall.entity.CityTime;
 import com.bird.framework.xsy.mall.entity.Movie;
+import com.bird.framework.xsy.mall.entity.TimeCinema;
 import com.bird.framework.xsy.mall.enums.MovieEnum;
-import com.bird.framework.xsy.mall.service.MovieService;
+import com.bird.framework.xsy.mall.service.CityTimeService;
 import com.bird.framework.xsy.mall.service.MemberService;
+import com.bird.framework.xsy.mall.service.MovieService;
+import com.bird.framework.xsy.mall.service.TimeCinemaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -31,6 +39,43 @@ public class MovieRest {
     private MemberService memberService;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RedissonClient redissonClient;
+    @Autowired
+    private TimeCinemaService timeCinemaService;
+    @Autowired
+    private CityTimeService cityTimeService;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @RequestMapping("/cinema/{district}")
+    public List<TimeCinema> cinemas(@PathVariable("district") String district) {
+        CityTime cityTime = cityTimeService.selectByCityCode(district);
+        if (cityTime != null) {
+            return timeCinemaService.selectByDistrict(cityTime.getTimeCode());
+        }
+        return null;
+    }
+
+    @RequestMapping("/film/{cinema}")
+    public List<Map<String,Object>> films(@PathVariable("cinema") String cinema) throws IOException {
+        TimeCinema timeCinema = timeCinemaService.selectByCinema(cinema);
+        if (timeCinema != null) {
+            RBucket<List<Map<String,Object>>> bucket = redissonClient.getBucket("film.cinema." + cinema);
+            if (!bucket.isExists()) {
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://service.theater.mtime.com/Cinema.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Cinema.Services&Ajax_CallBackMethod=GetOnlineMoviesInTheater&Ajax_CallBackArgument0=" + cinema, String.class);
+                String body = responseEntity.getBody().replace("var getGetOnlineMoviesInTheaterResult = ", "");
+                Map<String, Object> content = objectMapper.readValue(body, Map.class);
+                Map<String, Object> info = (Map<String, Object>) content.get("value");
+                List<Map<String, Object>> movies = (List<Map<String, Object>>) info.get("movies");
+                bucket.set(movies);
+                return movies;
+            }
+            return bucket.get();
+        }
+        return null;
+    }
 
     /**
      * 创建订单

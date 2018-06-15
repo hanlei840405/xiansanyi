@@ -7,7 +7,6 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 @RequestMapping("rest/system/menu")
 public class MenuRestController {
     @Autowired
-    @Qualifier("operateMenuService")
     private MenuService menuService;
 
     @RequestMapping("/id")
@@ -95,7 +93,7 @@ public class MenuRestController {
         Map<Long, Tree<Long>> menuMap = new HashMap<>();
         List<Long> addedMenus = new ArrayList<>();
         menus.forEach(menu -> {
-            if ((Long)menu.get("parent_id") == 0) { // 根级
+            if ((Long) menu.get("parent_id") == 0) { // 根级
                 Tree<Long> root = new Tree<>();
                 root.setId((Long) menu.get("id"));
                 root.setParentId(0L);

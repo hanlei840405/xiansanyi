@@ -1,0 +1,111 @@
+<div th:replace="head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+<body ontouchstart>
+
+<header style="padding: 20px 15px;">
+    <i class="iconfont icon-dianying"></i>影票
+</header>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="location" class="weui-label">城市</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="location" type="text" value="">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label" for="cinema">影院</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="cinema" name="cinema" placeholder="影院名称">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label" for="movie">片名</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="电影片名" name="movie" id="movie">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label" for="time">场次时间</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="datetime-local" id="time" name="time" placeholder="场次时间">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="price" class="weui-label">期望票价</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" id="price" name="price" type="number" placeholder="原价的5至7折">
+        </div>
+    </div>
+    <div class="weui-btn-area">
+        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+    </div>
+</div>
+</body>
+<div th:replace="js" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+<script src="js/times.js"></script>
+<script type="text/javascript">
+  var isOpen = false;
+  var selectLocation;
+      $("#location").cityPicker({
+        title: "选择城市",
+        onChange: function (picker, values, displayValues) {
+          selectLocation=values[2];
+        }
+      });
+
+      $("#cinema").bind('focus', function(e) {
+        if (!isOpen) {
+          isOpen =true;
+          // 选择电影院
+          $.ajax({
+            url: 'api/movie/cinema/' + selectLocation,
+            method: 'post',
+            success: function(res) {
+              var array = new Array();
+              for(var i = 0;i < res.length;i++) {
+                var item = {'title': res[i].name, 'value': res[i].code};
+                array.push(item);
+              }
+              $("#cinema").select({
+                title: "选择影院",
+                items: array,
+                onClose: function(){
+                  isOpen = false; 
+                }
+              });
+            }
+          });
+        }
+      });
+
+      // 选择电影
+      $("#movie").bind('focus', function(e) {
+        if (!isOpen) {
+          isOpen =true;
+          
+          if ($("#cinema").attr('data-values')) {
+            $.ajax({
+              url: 'api/movie/film/' + $("#cinema").attr('data-values'),
+              method: 'post',
+              success: function(res) {
+              var array = new Array();
+              for(var i = 0;i < res.length;i++) {
+                var item = {'title': res[i].title, 'value': res[i].movieId};
+                array.push(item);
+              }
+              $("#movie").select({
+                title: "选择影院",
+                items: array,
+                onClose: function(){
+                  isOpen = false; 
+                }
+              });
+              }
+            });
+          }
+          $.ajax(
+        }
+      });
+</script>
+</html>

@@ -5,7 +5,6 @@ import com.bird.framework.xsy.operate.entity.User;
 import com.bird.framework.xsy.operate.service.RoleService;
 import com.bird.framework.xsy.operate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,10 +18,8 @@ import java.util.List;
 @Service
 public class UserSecurityService implements UserDetailsService {
     @Autowired
-    @Qualifier("operateUserService")
     private UserService userService;
     @Autowired
-    @Qualifier("operateRoleService")
     private RoleService roleService;
 
     @Override

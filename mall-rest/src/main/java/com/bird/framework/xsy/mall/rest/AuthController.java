@@ -1,4 +1,4 @@
-package com.bird.framework.xsy.mall.rest.auth;
+package com.bird.framework.xsy.mall.rest;
 
 import com.bird.framework.xsy.mall.entity.Member;
 import com.bird.framework.xsy.mall.service.auth.AuthService;

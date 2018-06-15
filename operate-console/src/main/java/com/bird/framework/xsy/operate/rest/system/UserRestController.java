@@ -7,7 +7,6 @@ import com.bird.framework.xsy.operate.service.UserService;
 import com.github.pagehelper.Page;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +20,8 @@ import java.util.Map;
 @RequestMapping("rest/system/user")
 public class UserRestController {
     @Autowired
-    @Qualifier("operateUserService")
     private UserService userService;
     @Autowired
-    @Qualifier("operateRoleService")
     private RoleService roleService;
 
     @RequestMapping("/id")

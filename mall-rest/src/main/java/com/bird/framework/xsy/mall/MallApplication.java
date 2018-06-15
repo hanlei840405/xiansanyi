@@ -1,20 +1,58 @@
 package com.bird.framework.xsy.mall;
 
 import com.bird.framework.xsy.mall.config.ServiceConfig;
+import com.bird.framework.xsy.mall.entity.CityTime;
+import com.bird.framework.xsy.mall.entity.TimeCinema;
+import com.bird.framework.xsy.mall.service.CityTimeService;
+import com.bird.framework.xsy.mall.service.TimeCinemaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @EnableTransactionManagement
 @SpringBootApplication
 @Import(ServiceConfig.class)
 public class MallApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+        ObjectMapper objectMapper = new ObjectMapper();
         ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(MallApplication.class, args);
-//        MemberService userService = configurableApplicationContext.getBean(MemberService.class);
+//        CityTimeService cityTimeService = configurableApplicationContext.getBean(CityTimeService.class);
+//        TimeCinemaService timeCinemaService = configurableApplicationContext.getBean(TimeCinemaService.class);
+//        List<CityTime> cityTimes = cityTimeService.all("0");
+//        for (CityTime cityTime : cityTimes) {
+//            ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://service.theater.mtime.com/Cinema.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Cinema.Services&Ajax_CallBackMethod=GetOnlineTheatersInCity&Ajax_CallBackArgument0=" + cityTime.getTimeCode(), String.class);
+//            String value = responseEntity.getBody().replace("var getGetOnlineTheatersInCityResult = ", "");
+//            Map<String, Object> content = objectMapper.readValue(value, Map.class);
+//
+//            Map<String, Object> aaa = (Map<String, Object>) content.get("value");
+//            List<Map<String, Object>> cinemas = (List<Map<String, Object>>) aaa.get("cinemas");
+//            for (Map<String, Object> map : cinemas) {
+//                String code = map.get("cinemaId").toString();
+//                String name = map.get("name").toString();
+//                String districtId = map.get("districtId").toString();
+//                CityTime cityTime1 = cityTimeService.selectByTimeCode(districtId);
+//                TimeCinema timeCinema = new TimeCinema();
+//                if (cityTime1 != null) {
+//                    timeCinema.setDistrictCode(cityTime1.getTimeCode());
+//                }
+//                timeCinema.setCityCode(cityTime.getTimeCode());
+//                timeCinema.setCode(code);
+//                timeCinema.setName(name);
+//                timeCinemaService.save(timeCinema);
+//            }
+//        }
+
 //        RoleService roleService = configurableApplicationContext.getBean(RoleService.class);
 //        Role role = new Role();
 //        role.setName("BUYER");

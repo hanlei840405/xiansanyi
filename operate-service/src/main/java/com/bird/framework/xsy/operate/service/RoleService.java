@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author jesse.Han
  */
-@Service("operateRoleService")
+@Service
 public class RoleService {
     @Autowired
     private RoleMapper roleMapper;

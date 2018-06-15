@@ -15,6 +15,9 @@ spring:
     port: 5672
     username: ruguiniao
     password: 1qaz@WSX?
+  thymeleaf:
+    cache: false
+    mode: HTML
 
 mybatis:
   mapperLocations: classpath*:mappers/*.xml
@@ -26,7 +29,7 @@ pagehelper:
   params: count=countSql
 jwt:
   header: Authorization
-  expiration: 300 # 5 minutes
+  expiration: 3600 # 5 minutes
   secret: bird
   tokenHead: "Bearer "
 

@@ -6,7 +6,6 @@ import com.github.pagehelper.Page;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,6 @@ import java.util.Map;
 @RequestMapping("rest/system/role")
 public class RoleRestController {
     @Autowired
-    @Qualifier("operateRoleService")
     private RoleService roleService;
 
     @RequestMapping("/id")
