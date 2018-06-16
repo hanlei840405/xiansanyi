@@ -1,22 +1,17 @@
 package com.bird.framework.xsy.mall;
 
 import com.bird.framework.xsy.mall.config.ServiceConfig;
-import com.bird.framework.xsy.mall.entity.CityTime;
-import com.bird.framework.xsy.mall.entity.TimeCinema;
-import com.bird.framework.xsy.mall.service.CityTimeService;
-import com.bird.framework.xsy.mall.service.TimeCinemaService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.bird.framework.xsy.mall.service.ansj.DicLibraryService;
+import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.dictionary.CustomDictionary;
+import org.ansj.library.DicLibrary;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 @EnableTransactionManagement
 @SpringBootApplication
@@ -24,8 +19,10 @@ import java.util.Map;
 public class MallApplication {
 
     public static void main(String[] args) throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
-        ObjectMapper objectMapper = new ObjectMapper();
+//        System.out.println(HanLP.segment("微 信"));
+//        DicLibraryService.analysis("近平特朗普");
+//        RestTemplate restTemplate = new RestTemplate();
+//        ObjectMapper objectMapper = new ObjectMapper();
         ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(MallApplication.class, args);
 //        CityTimeService cityTimeService = configurableApplicationContext.getBean(CityTimeService.class);
 //        TimeCinemaService timeCinemaService = configurableApplicationContext.getBean(TimeCinemaService.class);
