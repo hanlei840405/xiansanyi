@@ -142,37 +142,5 @@
         }
     });
 
-    // 选择时间
-    // $("#time").bind('click', function (e) {
-    //     if (!isOpen) {
-    //         isOpen = true;
-    //
-    //         if ($("#cinema").attr('data-values') && $("#movie").attr('data-values')) {
-    //             $.ajax({
-    //                 url: 'api/movie//times/' + $("#cinema").attr('data-values') + '/' +  $("#movie").attr('data-values'),
-    //                 method: 'post',
-    //                 success: function (res) {
-    //                     var array = new Array();
-    //                     for (var i = 0; i < res.length; i++) {
-    //                         var item = {'title': res[i].title, 'value': res[i].movieId};
-    //                         array.push(item);
-    //                     }
-    //                     $("#movie").select({
-    //                         title: "选择电影",
-    //                         items: array,
-    //                         onClose: function () {
-    //                             isOpen = false;
-    //                         }
-    //                     });
-    //                 },
-    //                 error: function (res) {
-    //                     isOpen = false;
-    //                 }
-    //             });
-    //         } else {
-    //             isOpen = false;
-    //         }
-    //     }
-    // });
 </script>
 </html>

@@ -9,8 +9,11 @@
         <result column="movie" jdbcType="VARCHAR" property="movie"/>
         <result column="screen" jdbcType="VARCHAR" property="screen"/>
         <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="seats" jdbcType="VARCHAR" property="seats"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
         <result column="discount" jdbcType="INTEGER" property="discount"/>
         <result column="fee" jdbcType="INTEGER" property="fee"/>
         <result column="buyer" jdbcType="VARCHAR" property="buyer"/>
@@ -31,7 +34,7 @@
         <result column="finished" jdbcType="TIMESTAMP" property="finished"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, code, location, cinema, movie, screen, time, mobile, price, discount, fee, buyer, created,
+        id, code, location, cinema, movie, screen, time, seats, mobile, price, count, total, discount, fee, buyer, created,
         paid, pay_no, payment, sent2seller, seller, assigned, payload, sent2audit, sent2buyer,
         cancelled, reason, status, version, finished
     </sql>
@@ -47,8 +50,8 @@
     </delete>
     <insert id="insert" parameterType="com.bird.framework.xsy.mall.entity.Movie">
         insert into mall_movie (id, code, location,
-        cinema, movie, screen, time,
-        mobile, price, discount,
+        cinema, movie, screen, time, seats,
+        mobile, price, count, total, discount,
         fee, buyer, created,
         paid, pay_no, payment,
         sent2seller, seller, assigned,
@@ -57,297 +60,14 @@
         version, finished)
         values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR},
         #{cinema,jdbcType=VARCHAR}, #{movie,jdbcType=VARCHAR}, #{screen,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
-        #{mobile,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER},
-        #{fee,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
-        #{paid,jdbcType=TIMESTAMP}, #{payNo,jdbcType=VARCHAR}, #{payment,jdbcType=INTEGER},
+        #{seats,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{count,jdbcType=INTEGER},
+        #{total,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{fee,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR},
+        #{created,jdbcType=TIMESTAMP}, #{paid,jdbcType=TIMESTAMP}, #{payNo,jdbcType=VARCHAR}, #{payment,jdbcType=INTEGER},
         #{sent2seller,jdbcType=TIMESTAMP}, #{seller,jdbcType=VARCHAR}, #{assigned,jdbcType=TIMESTAMP},
         #{payload,jdbcType=VARCHAR}, #{sent2audit,jdbcType=TIMESTAMP}, #{sent2buyer,jdbcType=TIMESTAMP},
         #{cancelled,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
         #{version,jdbcType=INTEGER}, #{finished,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.bird.framework.xsy.mall.entity.Movie">
-        insert into mall_movie
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="code != null">
-                code,
-            </if>
-            <if test="location != null">
-                location,
-            </if>
-            <if test="cinema != null">
-                cinema,
-            </if>
-            <if test="movie != null">
-                movie,
-            </if>
-            <if test="screen != null">
-                screen,
-            </if>
-            <if test="time != null">
-                time,
-            </if>
-            <if test="mobile != null">
-                mobile,
-            </if>
-            <if test="price != null">
-                price,
-            </if>
-            <if test="discount != null">
-                discount,
-            </if>
-            <if test="fee != null">
-                fee,
-            </if>
-            <if test="buyer != null">
-                buyer,
-            </if>
-            <if test="created != null">
-                created,
-            </if>
-            <if test="paid != null">
-                paid,
-            </if>
-            <if test="payNo != null">
-                pay_no,
-            </if>
-            <if test="payment != null">
-                payment,
-            </if>
-            <if test="sent2seller != null">
-                sent2seller,
-            </if>
-            <if test="seller != null">
-                seller,
-            </if>
-            <if test="assigned != null">
-                assigned,
-            </if>
-            <if test="payload != null">
-                payload,
-            </if>
-            <if test="sent2audit != null">
-                sent2audit,
-            </if>
-            <if test="sent2buyer != null">
-                sent2buyer,
-            </if>
-            <if test="cancelled != null">
-                cancelled,
-            </if>
-            <if test="reason != null">
-                reason,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="version != null">
-                version,
-            </if>
-            <if test="finished != null">
-                finished,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="code != null">
-                #{code,jdbcType=VARCHAR},
-            </if>
-            <if test="location != null">
-                #{location,jdbcType=VARCHAR},
-            </if>
-            <if test="cinema != null">
-                #{cinema,jdbcType=VARCHAR},
-            </if>
-            <if test="movie != null">
-                #{movie,jdbcType=VARCHAR},
-            </if>
-            <if test="screen != null">
-                #{screen,jdbcType=VARCHAR},
-            </if>
-            <if test="time != null">
-                #{time,jdbcType=TIMESTAMP},
-            </if>
-            <if test="mobile != null">
-                #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="price != null">
-                #{price,jdbcType=INTEGER},
-            </if>
-            <if test="discount != null">
-                #{discount,jdbcType=INTEGER},
-            </if>
-            <if test="fee != null">
-                #{fee,jdbcType=INTEGER},
-            </if>
-            <if test="buyer != null">
-                #{buyer,jdbcType=VARCHAR},
-            </if>
-            <if test="created != null">
-                #{created,jdbcType=TIMESTAMP},
-            </if>
-            <if test="paid != null">
-                #{paid,jdbcType=TIMESTAMP},
-            </if>
-            <if test="payNo != null">
-                #{payNo,jdbcType=VARCHAR},
-            </if>
-            <if test="payment != null">
-                #{payment,jdbcType=INTEGER},
-            </if>
-            <if test="sent2seller != null">
-                #{sent2seller,jdbcType=TIMESTAMP},
-            </if>
-            <if test="seller != null">
-                #{seller,jdbcType=VARCHAR},
-            </if>
-            <if test="assigned != null">
-                #{assigned,jdbcType=TIMESTAMP},
-            </if>
-            <if test="payload != null">
-                #{payload,jdbcType=VARCHAR},
-            </if>
-            <if test="sent2audit != null">
-                #{sent2audit,jdbcType=TIMESTAMP},
-            </if>
-            <if test="sent2buyer != null">
-                #{sent2buyer,jdbcType=TIMESTAMP},
-            </if>
-            <if test="cancelled != null">
-                #{cancelled,jdbcType=TIMESTAMP},
-            </if>
-            <if test="reason != null">
-                #{reason,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=CHAR},
-            </if>
-            <if test="version != null">
-                #{version,jdbcType=INTEGER},
-            </if>
-            <if test="finished != null">
-                #{finished,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.mall.entity.Movie">
-        update mall_movie
-        <set>
-            <if test="code != null">
-                code = #{code,jdbcType=VARCHAR},
-            </if>
-            <if test="location != null">
-                location = #{location,jdbcType=VARCHAR},
-            </if>
-            <if test="cinema != null">
-                cinema = #{cinema,jdbcType=VARCHAR},
-            </if>
-            <if test="movie != null">
-                movie = #{movie,jdbcType=VARCHAR},
-            </if>
-            <if test="screen != null">
-                screen = #{screen,jdbcType=VARCHAR},
-            </if>
-            <if test="time != null">
-                time = #{time,jdbcType=TIMESTAMP},
-            </if>
-            <if test="mobile != null">
-                mobile = #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="price != null">
-                price = #{price,jdbcType=INTEGER},
-            </if>
-            <if test="discount != null">
-                discount = #{discount,jdbcType=INTEGER},
-            </if>
-            <if test="fee != null">
-                fee = #{fee,jdbcType=INTEGER},
-            </if>
-            <if test="buyer != null">
-                buyer = #{buyer,jdbcType=VARCHAR},
-            </if>
-            <if test="created != null">
-                created = #{created,jdbcType=TIMESTAMP},
-            </if>
-            <if test="paid != null">
-                paid = #{paid,jdbcType=TIMESTAMP},
-            </if>
-            <if test="payNo != null">
-                pay_no = #{payNo,jdbcType=VARCHAR},
-            </if>
-            <if test="payment != null">
-                payment = #{payment,jdbcType=INTEGER},
-            </if>
-            <if test="sent2seller != null">
-                sent2seller = #{sent2seller,jdbcType=TIMESTAMP},
-            </if>
-            <if test="seller != null">
-                seller = #{seller,jdbcType=VARCHAR},
-            </if>
-            <if test="assigned != null">
-                assigned = #{assigned,jdbcType=TIMESTAMP},
-            </if>
-            <if test="payload != null">
-                payload = #{payload,jdbcType=VARCHAR},
-            </if>
-            <if test="sent2audit != null">
-                sent2audit = #{sent2audit,jdbcType=TIMESTAMP},
-            </if>
-            <if test="sent2buyer != null">
-                sent2buyer = #{sent2buyer,jdbcType=TIMESTAMP},
-            </if>
-            <if test="cancelled != null">
-                cancelled = #{cancelled,jdbcType=TIMESTAMP},
-            </if>
-            <if test="reason != null">
-                reason = #{reason,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                status = #{status,jdbcType=CHAR},
-            </if>
-            <if test="version != null">
-                version = #{version,jdbcType=INTEGER},
-            </if>
-            <if test="finished != null">
-                finished = #{finished,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.mall.entity.Movie">
-        update mall_movie
-        set code = #{code,jdbcType=VARCHAR},
-        location = #{location,jdbcType=VARCHAR},
-        cinema = #{cinema,jdbcType=VARCHAR},
-        movie = #{movie,jdbcType=VARCHAR},
-        screen = #{screen,jdbcType=VARCHAR},
-        time = #{time,jdbcType=TIMESTAMP},
-        mobile = #{mobile,jdbcType=VARCHAR},
-        price = #{price,jdbcType=INTEGER},
-        discount = #{discount,jdbcType=INTEGER},
-        fee = #{fee,jdbcType=INTEGER},
-        buyer = #{buyer,jdbcType=VARCHAR},
-        created = #{created,jdbcType=TIMESTAMP},
-        paid = #{paid,jdbcType=TIMESTAMP},
-        pay_no = #{payNo,jdbcType=VARCHAR},
-        payment = #{payment,jdbcType=INTEGER},
-        sent2seller = #{sent2seller,jdbcType=TIMESTAMP},
-        seller = #{seller,jdbcType=VARCHAR},
-        assigned = #{assigned,jdbcType=TIMESTAMP},
-        payload = #{payload,jdbcType=VARCHAR},
-        sent2audit = #{sent2audit,jdbcType=TIMESTAMP},
-        sent2buyer = #{sent2buyer,jdbcType=TIMESTAMP},
-        cancelled = #{cancelled,jdbcType=TIMESTAMP},
-        reason = #{reason,jdbcType=VARCHAR},
-        status = #{status,jdbcType=CHAR},
-        version = #{version,jdbcType=INTEGER},
-        finished = #{finished,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=BIGINT}
-    </update>
     <select id="selectByMultiParams" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

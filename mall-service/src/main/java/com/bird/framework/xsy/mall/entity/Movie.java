@@ -38,6 +38,11 @@ public class Movie implements Serializable {
     private Date time;
 
     /**
+     * 位置
+     */
+    private String seats;
+
+    /**
      * 买方电话
      */
     private String mobile;
@@ -46,6 +51,16 @@ public class Movie implements Serializable {
      * 影票原始价格
      */
     private Integer price;
+
+    /**
+     * 数量
+     */
+    private Integer count;
+
+    /**
+     * 总价
+     */
+    private Integer total;
 
     /**
      * 折扣价格

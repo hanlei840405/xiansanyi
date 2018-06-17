@@ -12,13 +12,7 @@ public interface MovieMapper {
 
     int insert(Movie record);
 
-    int insertSelective(Movie record);
-
     Movie selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Movie record);
-
-    int updateByPrimaryKey(Movie record);
 
     Movie selectByCode(String code);
 
