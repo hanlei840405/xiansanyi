@@ -5,65 +5,92 @@
     <i class="iconfont icon-dianying"></i>影票
 </header>
 <div class="weui-cells weui-cells_form">
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="location" class="weui-label">城市</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" id="location" type="text" value="">
+    <form id="movieForm" action="return false;">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="location" class="weui-label">城市</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="location" type="text" value="" required>
+            </div>
         </div>
-    </div>
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label" for="cinema">影院</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="cinema" name="cinema" placeholder="影院名称">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label" for="cinema">影院</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="cinema" name="cinema" placeholder="影院名称" required>
+            </div>
         </div>
-    </div>
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label" for="movie">片名</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="电影片名" name="movie" id="movie">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label" for="movie">片名</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="电影片名" name="movie" id="movie" required>
+            </div>
         </div>
-    </div>
-    <div class="weui-cell">
-        <div class="weui-cell__hd">
-            <label class="weui-label" for="time">场次时间</label>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label" for="time">场次时间</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="time" name="time" placeholder="场次时间" required>
+            </div>
         </div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="time" name="time" placeholder="场次时间">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label" for="screen">屏幕类型</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="screen" name="screen" placeholder="场次时间" readonly>
+            </div>
         </div>
-    </div>
-    <div class="weui-cell">
-        <div class="weui-cell__hd">
-            <label class="weui-label" for="screen">屏幕类型</label>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="officialPrice" class="weui-label">官方价格</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="officialPrice" name="officialPrice" type="number" placeholder="官方价格"
+                       readonly>
+            </div>
         </div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="screen" name="screen" placeholder="场次时间" readonly>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="count" class="weui-label">数量</label></div>
+            <div class="weui-cell__bd">
+                <div class="weui-count">
+                    <a class="weui-count__btn weui-count__decrease"></a>
+                    <input class="weui-count__number" id="count" name="count" type="number" value="1" readonly
+                           required/>
+                    <a class="weui-count__btn weui-count__increase"></a>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="officialPrice" class="weui-label">官方价格</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" id="officialPrice" name="officialPrice" type="number" placeholder="官方价格" readonly>
+        <div class="weui-cell seats">
+            <div class="weui-cell__hd"><label class="weui-label">位置</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" style="width: 25%" name="seat_x" type="number" placeholder="排" required>排
+                <input class="weui-input" style="width: 25%" name="seat_y" type="number" placeholder="座" required>座
+            </div>
         </div>
-    </div>
-    <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="price" class="weui-label">期望票价</label></div>
-        <div class="weui-cell__bd">
-            <input class="weui-input" id="price" name="price" type="number" placeholder="原官方价格的5至7折">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="price" class="weui-label">期望价格</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="price" name="price" type="number" placeholder="官方价格的五至七折" required>
+            </div>
         </div>
-    </div>
     <div class="weui-btn-area">
-        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+        <input class="weui-btn weui-btn_primary" type="submit" value="提交"/>
     </div>
+    </form>
 </div>
 </body>
 <div th:replace="js" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 <script src="js/times.js"></script>
 <script type="text/javascript">
+    var MAX = 99, MIN = 1;
     $("#location").cityPicker({
         title: "选择城市",
         onChange: function (picker, values, displayValues) {
-            selectLocation = values[2];
             if (values && values[2]) {
+                $('#cinema').val('');
+                $('#movie').val('');
+                $('#time').val('');
+                $('#screen').val('');
+                $('#officialPrice').val('');
+                $('#price').val('');
                 // 选择电影院
                 $.ajax({
                     url: 'api/movie/cinema/' + values[2],
@@ -86,6 +113,11 @@
         items: [],
         onChange: function (value) {
             if (value.values) {
+                $('#movie').val('');
+                $('#time').val('');
+                $('#screen').val('');
+                $('#officialPrice').val('');
+                $('#price').val('');
                 // 选择电影院
                 $.ajax({
                     url: 'api/movie/film/' + value.values,
@@ -108,6 +140,10 @@
         items: [],
         onChange: function (value) {
             if (value.values) {
+                $('#time').val('');
+                $('#screen').val('');
+                $('#officialPrice').val('');
+                $('#price').val('');
                 // 选择时间
                 $.ajax({
                     url: 'api/movie/times/' + $("#cinema").attr('data-values') + '/' + value.values,
@@ -142,5 +178,47 @@
         }
     });
 
+    $('.weui-count__decrease').click(function (e) {
+        var count = $('#count');
+        var number = parseInt(count.val() || "0") - 1
+        if (number >= MIN) {
+            count.val(number);
+            $('.seats').last().remove();
+        }
+    });
+    $('.weui-count__increase').click(function (e) {
+        var count = $('#count');
+        var number = parseInt(count.val() || "0") + 1
+        if (number <= MAX) {
+            count.val(number);
+            $('.seats').last().after($('.seats').first().clone());
+        }
+    });
+    $("#movieForm").validate({
+        submitHandler: function (form) {
+            var array = $('#movieForm').serializeArray();
+            var movie = {};
+            var xArray = new Array();
+            var yArray = new Array();
+            for (var i = 0; i < array.length; i++) {
+                var item = array[i];
+                if ('seat_x' == item.name) {
+                    xArray.push(item.value);
+                } else if ('seat_y' == item.name) {
+                    yArray.push(item.value);
+                } else {
+                    movie[item.name] = item.value;
+                }
+            }
+            var seats = new Array();
+            for (var i = 0; i < xArray.length; i++) {
+                var x = xArray[i];
+                var y = yArray[j];
+                seats.push(x + '排' + y + '座');
+            }
+            movie['seats'] = seats;
+            console.log(movie);
+        }
+    });
 </script>
 </html>

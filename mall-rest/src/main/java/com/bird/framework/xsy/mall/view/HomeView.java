@@ -43,104 +43,12 @@ public class HomeView {
 
     @RequestMapping("")
     public String home() throws IOException {
-        List<String> jsonContents = Files.readLines(json.getFile(), Charset.forName("UTF-8"));
-        List<String> jdContents = Files.readLines(jd.getFile(), Charset.forName("UTF-8"));
-        StringBuffer json = new StringBuffer();
-        for (String contend : jsonContents) {
-            json.append(contend);
-        }
-        List<Map<String, String>> regions = new ArrayList<>();
-        List<Map<String, Object>> maps = objectMapper.readValue(json.toString(), List.class);
-        for (Map<String, Object> map : maps) {
-            List<Map<String, Object>> subs = (List<Map<String, Object>>) map.get("sub");
-            for (Map<String, Object> sub : subs) {
-                List<Map<String, Object>> subSubs = (List<Map<String, Object>>) sub.get("sub");
-                if (subSubs != null) {
-                    for (Map<String, Object> subSub : subSubs) {
-                        Map<String, String> region = new HashMap<>();
-                        String city = sub.get("name").toString().replace("区", "").replace("县", "").replace("州", "").replace("旗", "");
-                        if (!"市辖".equals(city)) {
-                            city = city.replace("市", "");
-                        }
-                        String name = subSub.get("name").toString().replace("区", "").replace("县", "").replace("州", "").replace("旗", "");
-                        if (!"市辖".equals(name)) {
-                            name = name.replace("市", "");
-                        }
-                        region.put("parentName", city);
-                        region.put("code", (String) subSub.get("code"));
-                        region.put("name", name);
-                        regions.add(region);
-                    }
-                }
-            }
-        }
 
-
-        StringBuffer jd = new StringBuffer();
-        for (String contend : jdContents) {
-            jd.append(contend);
-        }
-        List<Map<String, Object>> jdMaps = objectMapper.readValue(jd.toString(), List.class);
-        for (Map<String, Object> jdMap : jdMaps) {
-            List<Map<String, Object>> items = (List<Map<String, Object>>) jdMap.get("item");
-            for (Map<String, Object> item : items) {
-                List<Map<String, Object>> jdCities = (List<Map<String, Object>>) item.get("list");
-                for (Map<String, Object> city : jdCities) {
-                    int cityId = (int) city.get("id");
-                    String cityName = city.get("name").toString().replace("区", "").replace("县", "").replace("州", "").replace("旗", "");
-                    if (!"市辖".equals(cityName)) {
-                        cityName = cityName.replace("市", "");
-                    }
-                    String finalCityName = cityName;
-                    Map<String, String> jdRegion = parseHtml(cityId);
-
-                    if (!jdRegion.isEmpty()) {
-                        Runnable runnable = () -> {
-                            for (Map<String, String> region : regions) {
-                                String parentName = region.get("parentName");
-                                String code = region.get("code");
-                                String name = region.get("name");
-                                if (finalCityName.equals(parentName)) {
-                                    if (jdRegion.containsKey(name)) {
-                                        JdRegion regionJd = new JdRegion();
-                                        regionJd.setDistrictCode(code);
-                                        regionJd.setJdCityCode(cityId + "");
-                                        regionJd.setJdRegionCode(jdRegion.get(name));
-                                        jdRegionService.save(regionJd);
-                                    }
-                                }
-
-                            }
-                            log.info("end...");
-                        };
-                        Thread thread = new Thread(runnable);
-                        thread.start();
-                    }
-                }
-
-            }
-        }
         return "portal";
     }
 
     @RequestMapping("cinemas")
     public @ResponseBody String cinemas() throws IOException {
-        List<JdRegion> jdRegions = jdRegionService.findAll();
-        for (JdRegion jdRegion : jdRegions) {
-            String cityCode = jdRegion.getJdCityCode();
-            String regionCode = jdRegion.getJdRegionCode();
-            Runnable runnable = () -> {
-                try {
-                    List<JdCinema> jdCinemas = parsJson(cityCode, regionCode);
-                    jdCinemaService.save(jdCinemas);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                log.info("end...");
-            };
-            Thread thread = new Thread(runnable);
-            thread.start();
-        }
         return "ok";
     }
 
