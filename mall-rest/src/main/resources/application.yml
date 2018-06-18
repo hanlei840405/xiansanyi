@@ -1,9 +1,12 @@
 spring:
-  dataSource:
+  datasource:
+    hikari:
+      maximum-pool-size: 2000
     url: jdbc:mysql://116.196.104.38:3306/xsy?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&useSSL=false
     username: ruguiniao
     password: 1qaz@WSX?
     driverClassName: com.mysql.jdbc.Driver
+
   redis:
     host: 116.196.104.38
     port: 6379

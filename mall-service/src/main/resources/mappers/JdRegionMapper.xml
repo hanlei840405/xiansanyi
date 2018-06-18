@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bird.framework.xsy.mall.mapper.JdRegionMapper">
+  <resultMap id="BaseResultMap" type="com.bird.framework.xsy.mall.entity.JdRegion">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="district_code" jdbcType="VARCHAR" property="districtCode" />
+    <result column="jd_city_code" jdbcType="VARCHAR" property="jdCityCode" />
+    <result column="jd_region_code" jdbcType="VARCHAR" property="jdRegionCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, district_code, jd_city_code, jd_region_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_jd_region
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mall_jd_region
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bird.framework.xsy.mall.entity.JdRegion">
+    insert into mall_jd_region (id, district_code, jd_city_code, 
+      jd_region_code)
+    values (#{id,jdbcType=BIGINT}, #{districtCode,jdbcType=VARCHAR}, #{jdCityCode,jdbcType=VARCHAR}, 
+      #{jdRegionCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bird.framework.xsy.mall.entity.JdRegion">
+    insert into mall_jd_region
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="districtCode != null">
+        district_code,
+      </if>
+      <if test="jdCityCode != null">
+        jd_city_code,
+      </if>
+      <if test="jdRegionCode != null">
+        jd_region_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="districtCode != null">
+        #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jdCityCode != null">
+        #{jdCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jdRegionCode != null">
+        #{jdRegionCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bird.framework.xsy.mall.entity.JdRegion">
+    update mall_jd_region
+    <set>
+      <if test="districtCode != null">
+        district_code = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jdCityCode != null">
+        jd_city_code = #{jdCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jdRegionCode != null">
+        jd_region_code = #{jdRegionCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bird.framework.xsy.mall.entity.JdRegion">
+    update mall_jd_region
+    set district_code = #{districtCode,jdbcType=VARCHAR},
+      jd_city_code = #{jdCityCode,jdbcType=VARCHAR},
+      jd_region_code = #{jdRegionCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_jd_region
+  </select>
+</mapper>

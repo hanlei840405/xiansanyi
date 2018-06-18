@@ -1,10 +1,6 @@
 package com.bird.framework.xsy.mall;
 
 import com.bird.framework.xsy.mall.config.ServiceConfig;
-import com.bird.framework.xsy.mall.service.ansj.DicLibraryService;
-import com.hankcs.hanlp.HanLP;
-import com.hankcs.hanlp.dictionary.CustomDictionary;
-import org.ansj.library.DicLibrary;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
